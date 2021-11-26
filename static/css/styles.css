@@ -1,0 +1,93 @@
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+html{
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+}   
+
+.w-100{
+    width: 100%;
+}
+.row::after{
+    content: "";
+    clear: both;
+}
+/*Header Nav*/   
+#nav-bar{
+    background-color: #545454;
+}
+#nav-bar img{
+    margin-left: 10%;
+}
+#navigation{
+    margin-top: 20px;
+}
+#navigation li{
+    list-style-type: none;
+    display: inline-block;
+    padding: 8px 16px;
+}
+#nav-bar .btn-nav,
+#navigation li a{
+    text-decoration: none;
+    color: #fff;
+    padding: 8px 16px;
+    border: 3px solid #545454;
+}
+
+#nav-bar .btn-nav:hover,
+#navigation li a:hover{
+    cursor: pointer;
+    background-color: #fff;
+    color: #0cdd7c;
+    border: 3px solid #0cdd7c;
+}
+#nav-bar .icon-account,
+#nav-bar .btn-nav{
+    float: right;
+    margin-top: 20px;
+    margin-right: 32px;
+    background-color: #545454;
+}
+
+ /*Homepage đã đăng nhập*/
+#nav-bar .icon-account{
+    color: #fff;
+    font-size: 36px;
+}
+#nav-bar .icon-account:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+
+/*SlideShow*/
+
+#slideshow {
+    overflow: hidden;
+    height: 640px;
+    width: 100%;
+    margin: 0 auto;
+}
+.slide-wrapper {
+    width: 6180px;
+    animation: slide 14s ease infinite;
+}
+.slide {
+    float: left;
+    
+}
+@keyframes slide {
+    20% {margin-left: 0px;}
+    30% {margin-left: -1545px;}
+    50% {margin-left: -1545px;}
+    60% {margin-left: -3090px;}
+    80% {margin-left: -3090px;}
+}
+ 
+
