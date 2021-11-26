@@ -1,20 +1,71 @@
 import sqlite3
+import hashlib
+import datetime
 import sys
 import os
-con = sqlite3.connect('db.sqlite3')
 
-cur = con.cursor()
+DATABASE = 'db.sqlite3'
 
-# cur.execute("CREATE TABLE Users(Id INTEGER PRIMARY KEY AUTOINCREMENT, UserName TEXT, Email TEXT, PhoneNumber TEXT, Password TEXT)")
+def hashPassword(password):
+    hashpassword = hashlib.md5(password.encode('utf8')).hexdigest()
+    return hashpassword
 
-# cur.execute("CREATE TABLE Modes(Id INTEGER PRIMARY KEY AUTOINCREMENT, Mode TEXT, Soil REAL, Temp REAL, Humid REAL, Status BOOL, SprayMode TEXT, AmountWater REAL,Time REAL, CreateTime DATE)")
+def connectDatabase(database):
+    con = None
+    try:
+        con = sqlite3.connect(database)
+    except sqlite3.Error as e:
+        print ("Error %s:" % e.args[0])
+        sys.exit(1)
+    return con
 
-cur.execute("INSERT INTO Users VALUES(1,'admin','admin@gmail.com','1234','Admin@123')")
-cur.execute("INSERT INTO Users VALUES(3,'admin','admin@gmail.com','1234','Admin@123')")
+def createUser(username, email, phonenumber, password):
+    cipherpassword = hashPassword(password)
+    con = connectDatabase(DATABASE)
+    cur = con.cursor()
+    cur.execute("INSERT INTO users(UserName, Email, PhoneNumber, Password) VALUES (?, ?, ?, ?)", (username, email, phonenumber, cipherpassword))
+    con.commit()
+    con.close()
+    return True
 
-cur.execute('SELECT * FROM Users')
+def getPasswordByUserName(username):
+    con = connectDatabase(DATABASE)
+    cur = con.cursor()
+    cur.execute("Select Password FROM Users WHERE UserName=?", (username))
+    rows = cur.fetchall()
+    if rows:
+        con.commit()
+        con.close()
+        return rows[0][0]
+    else:
+        return None
 
-result = cur.fetchall()
-for row in result:
-    print (row)
-print(result)
+def loginUser(username, password):
+    if hashPassword(password) == getPasswordByUserName(username):
+        return True
+    else:
+        return False
+
+def getNameById(userId):
+    con = connectDatabase(DATABASE)
+    cur = con.cursor()
+    cur.execute("SELECT UserName from Users WHERE Id=?", (userId))
+    rows = cur.fetchall()
+    con.commit()
+    con.close()
+    if rows:
+        return rows[0][0]
+    else:
+        return None
+
+def getIdNameByUserName(username, password):
+    if loginUser(username, password):
+        con = connectDatabase(DATABASE)
+        cur = con.cursor()
+        cur.execute("SELECT Id, UserName FROM Users WHERE UserName=?", (username))
+        rows = cur.fetchall()
+        con.commit()
+        con.close()
+        return rows[0][0], rows[0][1]
+    else:
+        return None
