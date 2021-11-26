@@ -1,0 +1,103 @@
+#container{
+    height: 900px;
+}
+#content{
+    position: relative;
+    background-color: #fdedd4;
+}
+form{
+   position: absolute;
+   left: 50%;
+   transform: translate(-50%, 0);
+   padding: 32px 64px;
+   margin-top: 32px;
+   margin-bottom: 32px;
+   border: 2px inset #E2E7ED;
+   width: 50%;
+}
+form h1{
+   font-size: 32px;
+   text-align: center;
+   padding: 32px;
+   margin-bottom: 32px;
+   letter-spacing: 3px;
+}
+form label{
+   font-size: 18px;
+}
+form input{
+   padding: 8px ;
+   display: block;
+   margin: 8px 0 24px;
+   border: 2px solid #c6cbd1;
+   border-radius: 4px;
+}
+form input:focus{
+    border: 2px solid #ff6720a4;
+    outline: none;
+}
+
+.check-box{
+   float: left;
+}
+
+.group-form .check-box input{
+   display: inline-block;
+   margin-right: 8px;
+}
+.forgot a{
+   float: right;
+   text-decoration: none;
+   color: #FF6720;
+   padding: 4px;
+   font-weight: 400;
+}
+.forgot a:hover{
+   opacity: 0.8;
+}
+form .btn-login{
+   background-color: #FF6720;
+   color: #fff;
+   padding: 10px;
+   font-weight: 600;
+   letter-spacing: 1px;
+   font-size: 18px;
+}
+form .btn-login:hover{
+   color: #FF6720;
+   border: 1px solid #FF6720;
+   background-color: #fff;
+   cursor: pointer;
+}
+form fieldset{
+   border: none ;
+   border-top: 1px solid #ccc;
+   margin-top: 32px;
+}
+form fieldset legend{
+   text-align: center;
+}
+.list-social{
+   margin-top: 32px;
+   padding: 16px;
+}
+.list-social i{
+   text-decoration: none;
+   font-size: 48px;
+}
+.list-social ul{
+   list-style-type: none;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+.fa-facebook{
+   color: #097eeb;
+}
+.fa-google{
+   color: #e33e2f;
+   margin-left: 32px;
+}
+.list-social a:hover{
+   opacity: 0.8;
+}
