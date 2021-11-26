@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/grid.css">
+    <link rel="stylesheet" href="../static/css/form-login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="../static/font/fontawesome-free-5.15.4-web/css/all.css">
+</head>
+<body>
+    <div id="container" class="grid">
+        <div id="nav-bar" class="row no-gutter">
+            <div class="col l-3">
+                <a href="index.html"><img src="../static/img/logo.png" alt="logo" width="90px" height="75px"></a>
+            </div>
+            <div class="col l-6">
+                <ul id="navigation">
+                    <li><a href="index.html">Trang chủ</a></li>
+                    <li><a href="">Khu vực</a></li>
+                </ul>
+            </div>
+            <div class="col l-3">
+                <a href="Dang-nhap.html">
+                    <button type="button" class="btn-nav">Đăng nhập</button>
+                </a>
+            </div>
+        </div>
+        <div id="content" class="row no-gutter">
+            <form action="">
+                <h1>Đăng nhập</h1>
+                <label for="account">Tài khoản</label>
+                <input class="w-100" type="text" name="account" id="account" required placeholder="Nhập Email hoặc Số điện thoại"> 
+                <label for="password">Mật khẩu</label>
+                <input class="w-100" type="password" name="password" id="password" required placeholder="Nhập mật khẩu">
+                <div class="group-form row no-gutter w-100">
+                    <div class="check-box col l-6">
+                        <input type="checkbox" name="remember" id="remember">
+                        <label for="remember">Ghi nhớ tài khoản</label>
+                    </div>
+                    <div class="forgot col l-6">
+                        <a href="">Quên mật khẩu?</a>
+                    </div>
+                </div>
+                <input class="w-100 btn-login" type="submit" name="submit" id="submit" value="Đăng nhập">
+            
+                <fieldset>
+                    <legend>Hoặc đăng nhập với</legend>
+                </fieldset>
+                 <div class="list-social row no-gutter w-100">
+                    <ul class="w-100">
+                        <li><a href=""><i class="fab fa-facebook"></i></a></li>
+                        <li><a href=""><i class="fab fa-google"></i></a></li>
+                    </ul>
+                 </div>   
+            </form>
+        </div>
+    </div>
+</body>
+</html>
