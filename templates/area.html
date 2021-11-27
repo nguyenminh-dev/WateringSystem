@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>Watering System</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        color: white;
+    }
+    #container{
+        width: 100%;
+    }
+    #menu{
+        background-color: rgb(84,84,84);
+        width: 100%;
+        height: 120px;
+    }
+    #logo{
+        width: 8%;
+        float: left;
+        height: 120px;
+        position: relative;
+    }
+    #logo img {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        width: 100%;
+    }
+    #selection {
+        float: left;
+        height: 100%;
+        width: 60%;
+        display: table;
+    }
+    #id {
+        width: 20%;
+    }
+    #selection ul{
+        display: table-cell;
+        vertical-align: middle;
+    }   
+    #selection li{
+        display: inline-block;
+        color:  white;
+        line-height: 45px;
+        width: 20%;
+        text-align: center;
+    }
+    #selection li:hover {
+        background-color: rgb(128, 128, 128);
+        cursor: pointer;
+    }
+    #logout {
+        float: right;
+    }
+    #general {
+        padding-top: 20px;
+        width: 100%;
+        height: 450px;
+        background-color: rgb(254, 254, 242);
+    }
+
+
+    #plant-name {
+        width: 20%;
+        height: 120px;
+        background-image: url("../static/img/area_bg.png");
+        background-size:100% 100%;
+        background-repeat: no-repeat;
+        margin-left: 5%;
+        margin-top: 5px;
+        border-radius: 5px;
+        float: left;
+    }
+
+    #plant-name p {
+        margin-top: 2%;
+        margin-left: 6%;
+    }
+    a {
+        text-decoration: none;
+    }
+</style>
+
+<body>
+    <div id="container">
+        <div id="menu">
+            <div id="logo"><img src="../static/img/logo.png"></div>
+            <div id="selection">
+                <ul>
+                    <li>Trang chủ</li>
+                    <li style="background-color: rgb(128, 128, 128);">Khu vực</li>
+                    <li>Quản lý chế độ tưới</li>
+                    <li id="logout">Đăng xuất</li>
+                </ul>
+            </div>
+            <img id="avatar" src="../static/img/avatar.png">
+        </div>
+        <div id="general">
+            <a href="detail_auto.html" id="plant-name">
+                <p>Khu vực 1</p>
+                <p>Cây cà chua</p>
+            </a>
+            <a href="detail_auto.html" id="plant-name">
+                <p>Khu vực 1</p>
+                <p>Cây cà chua</p>
+            </a>
+            <a href="detail_auto.html" id="plant-name">
+                <p>Khu vực 1</p>
+                <p>Cây cà chua</p>
+            </a>
+
+        </div>
+    </div>
+</body>
+</html>
