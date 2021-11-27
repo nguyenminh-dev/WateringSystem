@@ -20,20 +20,20 @@
             <div class="col l-6">
                 <ul id="navigation">
                     <li><a href="index.html">Trang chủ</a></li>
-                    <li><a href="">Khu vực</a></li>
+                    <li><a href="area.html">Khu vực</a></li>
                 </ul>
             </div>
             <div class="col l-3">
-                <a href="Dang-nhap.html">
+                <a href="login.html">
                     <button type="button" class="btn-nav">Đăng nhập</button>
                 </a>
             </div>
         </div>
         <div id="content" class="row no-gutter">
-            <form action="">
+            <form action="" method="POST" novalidate="">
                 <h1>Đăng nhập</h1>
                 <label for="account">Tài khoản</label>
-                <input class="w-100" type="text" name="account" id="account" required placeholder="Nhập Email hoặc Số điện thoại"> 
+                <input class="w-100" type="text" name="account" id="account" required placeholder="Nhập tài khoản"> 
                 <label for="password">Mật khẩu</label>
                 <input class="w-100" type="password" name="password" id="password" required placeholder="Nhập mật khẩu">
                 <div class="group-form row no-gutter w-100">
@@ -46,18 +46,11 @@
                     </div>
                 </div>
                 <input class="w-100 btn-login" type="submit" name="submit" id="submit" value="Đăng nhập">
-            
                 <fieldset>
-                    <legend>Hoặc đăng nhập với</legend>
+                    <legend>Hoặc <a href="signup.html">Đăng kí</a></legend>
                 </fieldset>
-                 <div class="list-social row no-gutter w-100">
-                    <ul class="w-100">
-                        <li><a href=""><i class="fab fa-facebook"></i></a></li>
-                        <li><a href=""><i class="fab fa-google"></i></a></li>
-                    </ul>
-                 </div>   
             </form>
-        </div>
+        </div>      
     </div>
 </body>
 </html>
