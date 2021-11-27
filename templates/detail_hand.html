@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>Watering System</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        color: white;
+    }
+    #container{
+        width: 100%;
+    }
+    #menu{
+        background-color: rgb(84,84,84);
+        width: 100%;
+        height: 120px;
+    }
+    #logo{
+        width: 8%;
+        float: left;
+        height: 120px;
+        position: relative;
+    }
+    #logo img {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        width: 100%;
+    }
+    #selection {
+        float: left;
+        height: 100%;
+        width: 60%;
+        display: table;
+    }
+    #selection ul{
+        display: table-cell;
+        vertical-align: middle;
+    }   
+    #selection li{
+        display: inline-block;
+        color:  white;
+        line-height: 45px;
+        width: 20%;
+        text-align: center;
+    }
+    #selection li:hover {
+        background-color: rgb(128, 128, 128);
+        cursor: pointer;
+    }
+    #logout {
+        float: right;
+    }
+    #general {
+        height: 450px;
+        background-color: rgb(254, 254, 242);
+    }
+    #left {
+        float: left;
+        width: 35%;
+
+    }
+    #plant {
+        width: 100%;
+        height: 280px;
+    }
+    #plant-name, #mode-name {
+        width: 40%;
+        height: 80px;
+        background-image: url("../static/img/area_bg.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        margin-left: 5%;
+        margin-top: 5px;
+        border-radius: 5px;
+        float: left;
+    }
+    #plant p {
+        margin-top: 10px;
+        margin-left: 5%;
+    }
+    #plant-index, #mode-choice {
+        width: 40%;
+        height: 80px;
+        float: left;
+        margin-left: 5%;
+    }
+    #plant-index li, #mode-choice li {
+        width: 100%;
+        height: 80px;
+        background-color: rgb(51, 142, 151);
+        margin-top: 5px;
+        border-radius: 5px;
+        list-style: none;
+    }
+    #plant-index p, #mode-choice p {
+        text-align: center;
+        padding-top: 7px;
+    }
+    .number {
+        font-size: 190%;
+    }
+    #mode-name, #mode-choice li {
+        text-align: center;
+        display: table;
+    }
+    #mode-name p, #mode-choice p {
+        display: table-cell;
+        vertical-align: middle;
+    }
+    #watering-mode {
+        width: 100%;
+        height: 280px;
+    }
+
+    #selected-mode {
+        border-color: yellow;
+        border-style: solid;
+    }
+
+    #option-table {
+        float: left;
+        width: 60%;
+        border-color: rgb(46, 240, 227);
+        border-style: solid;
+        min-height: 400px;
+        margin-top: 5px;
+
+
+    }
+    #table-title {
+        width: 100%;
+        height: 60px;
+        background-color: rgb(81, 214, 102);
+        display: table;
+        text-align: center;
+    }
+    #table-title p {
+        display: table-cell;
+        vertical-align: middle;
+    }
+    #table-index {
+        width: 100%;
+    }
+    #table-index p {
+        text-align: center;
+        margin-top: 30px;
+        color: blue;
+    }
+
+#watering-shape {
+    text-align: center;
+    margin-top: 20px;
+}
+.labl {
+    display: inline-block;
+    
+
+    border-radius: 20px;
+    text-align: center;
+}
+.lab1 div {
+    color: green;
+
+}
+.labl > input{ /* HIDE RADIO */
+    visibility: hidden; /* Makes input not-clickable */
+    position: absolute; /* Remove input from document flow */
+}
+.labl > input + div{ /* DIV STYLES */
+    cursor:pointer;
+    border:2px solid transparent;border-radius: 20px;
+    height: 40px;
+    display: table-cell;
+    vertical-align: middle;
+    width: 50%;
+}
+.labl > input:checked + div{ /* (RADIO CHECKED) DIV STYLES */
+    background-color: yellow;
+    border: 1px solid #ff6600;
+}
+
+
+.slidecontainer {
+    display: flex;
+    justify-content: center;
+}
+
+.slidecontainer input {
+    position: static;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+}
+
+ .switch-button {
+        display: flex;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(255, 0, 0);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: rgb(0, 0, 0);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #01f854;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+
+</style>
+<script src=""></script>
+<body>
+    <div id="container">
+        <div id="menu">
+            <div id="logo"><img src="../static/img/logo.png"></div>
+            <div id="selection">
+                <ul>
+                    <li>Trang chủ</li>
+                    <li style="background-color: rgb(128, 128, 128);">Khu vực</li>
+                    <li>Quản lý chế độ tưới</li>
+                    <li id="logout">Đăng xuất</li>
+                </ul>
+            </div>
+            <img id="avatar" src="../static/img/avatar.png">
+        </div>
+        <div id="general">
+            <div id="left">
+                <div id="plant">
+                    <div id="plant-name">
+                        <p>Khu vực 1</p>
+                        <p>Cây cà chua</p>
+                    </div>
+                    <div id="plant-index">
+                        <ul>
+                            <li>
+                                <p>Độ ẩm đất</p>
+                                <p class="number">60%</p>
+                            </li>
+                            <li>
+                                <p>Độ ẩm không khí</p>
+                                <p class="number">70%</p>
+                            </li><li>
+                                <p>Nhiệt độ</p>
+                                <p class="number">60%</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="watering-mode">
+                    <div id="mode-name">
+                        <p>Chọn chế độ tưới</p>
+                    </div>
+                    <div id="mode-choice">
+                        <ul>
+                            <a href="detail_auto.html">
+                            <li>
+                                <p>Tự động</p>
+                            </li>
+                            </a>                        
+                            <li id="selected-mode">
+                                <p>Thủ công</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="option-table">
+                <div id="table-title"><p>Tưới thủ công</p></div>
+
+                <form action="#">
+                    <div id="table-index">
+                        <p>Chế độ phun</p>
+                        <div id="watering-shape">
+                            <label class="labl">
+                                <input type="radio" name="radioname" value="one_value" checked="checked"/>
+                                <div style="color: green;">Phun hình nón</div>
+                            </label>
+                            <label class="labl">
+                                <input type="radio" name="radioname" value="another" />
+                                <div style="color: green;">Phun chùm</div>
+                            </label>
+                            <label class="labl">
+                                <input type="radio" name="radioname" value="another" />
+                                <div style="color: green;">Phun sương</div>
+                            </label>
+                        </div>
+                        <p>Lượng nước tưới: <span id="demo" style="color: blue;"></span> m3/giờ</p>
+
+                        <div class="slidecontainer">
+                          <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+                        </div>
+                    </div>
+                    <div class="row switch-button">
+                        <label class="switch">
+                            <input type="checkbox" id="switch">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+<script>
+var x, i, j, l, ll, selElmnt, a, b, c;
+/*look for any elements with the class "custom-select":*/
+x = document.getElementsByClassName("custom-select");
+l = x.length;
+for (i = 0; i < l; i++) {
+  selElmnt = x[i].getElementsByTagName("select")[0];
+  ll = selElmnt.length;
+  /*for each element, create a new DIV that will act as the selected item:*/
+  a = document.createElement("DIV");
+  a.setAttribute("class", "select-selected");
+  a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+  x[i].appendChild(a);
+  /*for each element, create a new DIV that will contain the option list:*/
+  b = document.createElement("DIV");
+  b.setAttribute("class", "select-items select-hide");
+  for (j = 1; j < ll; j++) {
+    /*for each option in the original select element,
+    create a new DIV that will act as an option item:*/
+    c = document.createElement("DIV");
+    c.innerHTML = selElmnt.options[j].innerHTML;
+    c.addEventListener("click", function(e) {
+        /*when an item is clicked, update the original select box,
+        and the selected item:*/
+        var y, i, k, s, h, sl, yl;
+        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+        sl = s.length;
+        h = this.parentNode.previousSibling;
+        for (i = 0; i < sl; i++) {
+          if (s.options[i].innerHTML == this.innerHTML) {
+            s.selectedIndex = i;
+            h.innerHTML = this.innerHTML;
+            y = this.parentNode.getElementsByClassName("same-as-selected");
+            yl = y.length;
+            for (k = 0; k < yl; k++) {
+              y[k].removeAttribute("class");
+            }
+            this.setAttribute("class", "same-as-selected");
+            break;
+          }
+        }
+        h.click();
+    });
+    b.appendChild(c);
+  }
+  x[i].appendChild(b);
+  a.addEventListener("click", function(e) {
+      /*when the select box is clicked, close any other select boxes,
+      and open/close the current select box:*/
+      e.stopPropagation();
+      closeAllSelect(this);
+      this.nextSibling.classList.toggle("select-hide");
+      this.classList.toggle("select-arrow-active");
+    });
+}
+function closeAllSelect(elmnt) {
+  /*a function that will close all select boxes in the document,
+  except the current select box:*/
+  var x, y, i, xl, yl, arrNo = [];
+  x = document.getElementsByClassName("select-items");
+  y = document.getElementsByClassName("select-selected");
+  xl = x.length;
+  yl = y.length;
+  for (i = 0; i < yl; i++) {
+    if (elmnt == y[i]) {
+      arrNo.push(i)
+    } else {
+      y[i].classList.remove("select-arrow-active");
+    }
+  }
+  for (i = 0; i < xl; i++) {
+    if (arrNo.indexOf(i)) {
+      x[i].classList.add("select-hide");
+    }
+  }
+}
+/*if the user clicks anywhere outside the select box,
+then close all select boxes:*/
+document.addEventListener("click", closeAllSelect);
+
+
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+
+</script>
+</body>
+</html>
