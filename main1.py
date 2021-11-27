@@ -7,7 +7,7 @@ import flask_login
 import database
 
 
-app = Flask(__name__, template_folder='./templates')
+app = Flask(__name__)
 app.secret_key = 'hcmutk18'
 
 login_manager = flask_login.LoginManager()
@@ -48,9 +48,42 @@ def login():
             flash('Wrong email or password. Please try again!', category='error')
             return render_template('login.html')
         else: 
-            usrid, usrname = database.getIdNameByUserName(username, password)
+            usrid, usrname, role = database.getIdNameByUserName(username, password)
             flash('Login successful!', category='success')
-            user = User(usrid, usrname)
-            flask_login.login_user(user)
-            return render_template('userlogin.html', usrname=usrname) 
+            if(role == 'Admin'):
+                user = User(usrid, usrname)
+                flask_login.login_user(user)
+                return render_template('manager.html', usrname=usrname) 
+            else:
+                user = User(usrid, usrname)
+                flask_login.login_user(user)
+                return render_template('User-homepage.html', usrname=usrname) 
+            
     return render_template('login.html')
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    error = None
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        phonenumber = request.form['phonenumber']
+        password = request.form['password']
+        role = 'User'
+        if database.getPasswordByUserName(username) != None:
+            flash('Account already exists. Please try another Username!', category='error')
+        else:            
+            database.createUser(username, email, phonenumber, password, role)
+            flash('Register successful!', category='susscess')
+    return render_template('signup.html', error=error)
+
+@app.route('/area')
+@flask_login.login_required
+def area():
+    user = flask_login.current_user   
+    return render_template('area.html', usrname=user.name)
+
+
+
+if __name__ == '__main__':    
+    app.run(debug=True)

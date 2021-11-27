@@ -19,11 +19,11 @@ def connectDatabase(database):
         sys.exit(1)
     return con
 
-def createUser(username, email, phonenumber, password):
+def createUser(username, email, phonenumber, password, Role):
     cipherpassword = hashPassword(password)
     con = connectDatabase(DATABASE)
     cur = con.cursor()
-    cur.execute("INSERT INTO users(UserName, Email, PhoneNumber, Password) VALUES (?, ?, ?, ?)", (username, email, phonenumber, cipherpassword))
+    cur.execute("INSERT INTO Users(UserName, Email, PhoneNumber, Password, Role) VALUES (?, ?, ?, ?, ?)", (username, email, phonenumber, cipherpassword, Role))
     con.commit()
     con.close()
     return True
@@ -31,7 +31,7 @@ def createUser(username, email, phonenumber, password):
 def getPasswordByUserName(username):
     con = connectDatabase(DATABASE)
     cur = con.cursor()
-    cur.execute("Select Password FROM Users WHERE UserName=?", (username))
+    cur.execute("Select Password FROM Users WHERE UserName=?", [username])
     rows = cur.fetchall()
     if rows:
         con.commit()
@@ -49,7 +49,7 @@ def loginUser(username, password):
 def getNameById(userId):
     con = connectDatabase(DATABASE)
     cur = con.cursor()
-    cur.execute("SELECT UserName from Users WHERE Id=?", (userId))
+    cur.execute("SELECT UserName from Users WHERE rowid=?", [userId])
     rows = cur.fetchall()
     con.commit()
     con.close()
@@ -62,10 +62,10 @@ def getIdNameByUserName(username, password):
     if loginUser(username, password):
         con = connectDatabase(DATABASE)
         cur = con.cursor()
-        cur.execute("SELECT Id, UserName FROM Users WHERE UserName=?", (username))
+        cur.execute("SELECT rowid, UserName, Role FROM Users WHERE UserName=?", [username])
         rows = cur.fetchall()
         con.commit()
         con.close()
-        return rows[0][0], rows[0][1]
+        return rows[0][0], rows[0][1], rows[0][2]
     else:
         return None

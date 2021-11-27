@@ -14,16 +14,16 @@
     <div id="container" class="grid">
         <div id="nav-bar" class="row no-gutter">
             <div class="col l-3">
-                <a href="index.html"><img src="../static/img/logo.png" alt="logo" width="90px" height="75px"></a>
+                <a href="{{ url_for('index') }}"><img src="../static/img/logo.png" alt="logo" width="90px" height="75px"></a>
             </div>
             <div class="col l-6">
                 <ul id="navigation">
-                    <li><a href="index.html">Trang chủ</a></li>
-                    <li><a href="login.html">Khu vực</a></li>
+                    <li><a href="{{ url_for('index') }}">Trang chủ</a></li>
+                    <li><a href="{{ url_for('area') }}">Khu vực</a></li>
                 </ul>
             </div>
             <div class="col l-3">
-                <a href="login.html">
+                <a href="{{ url_for('login') }}">
                     <button type="button" class="btn-nav">Đăng nhập</button>
                 </a>
             </div>
