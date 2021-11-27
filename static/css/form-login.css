@@ -33,8 +33,8 @@ form input{
    border-radius: 4px;
 }
 form input:focus{
-    border: 2px solid #ff6720a4;
-    outline: none;
+   border: 2px solid #ff6720a4;
+   outline: none;
 }
 
 .check-box{
@@ -100,4 +100,9 @@ form fieldset legend{
 }
 .list-social a:hover{
    opacity: 0.8;
+}
+
+a{
+   color: blue;
+   text-decoration: none;
 }
