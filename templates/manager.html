@@ -15,21 +15,19 @@
     <div id="container" class="grid">
         <div id="nav-bar" class="row no-gutter">
             <div class="col l-3">
-                <a href="index.html"><img src="../static/img/logo.png" alt="logo" width="90px" height="75px"></a>
+                <a href="{{ url_for('index') }}"><img src="../static/img/logo.png" alt="logo" width="90px" height="75px"></a>
             </div>
             <div class="col l-6">
-                <ul id="navigation">
-                    <li><a href="index.html">Trang chủ</a></li>
-                    <li><a href="">Khu vực</a></li>
-                    <li><a href="">Quản lý chế độ tưới</a></li>
-                </ul>
+                <!-- <ul id="navigation">
+                    <li><a href="{{ url_for('index') }}">Trang chủ</a></li>
+                    <li><a href="{{ url_for('index') }}">Khu vực</a></li>
+                </ul> -->
             </div>
             <div class="col l-3">
-                <a href=""><i class="icon-account fas fa-user-circle"></i></a>
-                <a href="index.html">
+                <a href=""><i class="icon-account fas fa-user-circle"><h2>{{ usrname }}</h2></i></a>
+                <a href="{{ url_for('logout') }}">
                     <button type="button" class="btn-nav">Đăng xuất</button>
                 </a>
-                
             </div>
         </div>
         <div class="row no-gutter">
@@ -45,21 +43,23 @@
                         <th class="proper-short">Ngày tạo</th>
                         <th class="proper-short">Thao tác</th>
                     </tr>
+                    {% for mode in modes %}
                     <tr>
-                        <td class="proper-short"></td>
-                        <td class="proper-short"></td>
-                        <td class="proper-long"></td>
-                        <td class="proper-short"></td>
-                        <td class="proper-short"></td>
-                        <td class="proper-long"></td>
-                        <td class="proper-short"></td>
+                        <td class="proper-short">{{mode[0]}}</td>
+                        <td class="proper-short">{{mode[1]}}</td>
+                        <td class="proper-short">{{mode[2]}}</td>
+                        <td class="proper-short">{{mode[3]}}</td>
+                        <td class="proper-short">{{mode[5]}}</td>
+                        <td class="proper-short">{{mode[6]}}</td>
+                        <td class="proper-short">{{mode[8]}}</td>
                         <td class="proper-short">
                             <button type="button" class="btn-edit">Sửa</button>
                             <button type="button">Xóa</button>
                         </td>
                     </tr>
+                    {% endfor %}
                 </table>
-           </div>
+            </div>
             <div class="col l-2">
                 <button class="btn-add" type="button">Thêm mới</button>
             </div>

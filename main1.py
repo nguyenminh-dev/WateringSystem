@@ -53,7 +53,7 @@ def login():
             if(role == 'Admin'):
                 user = User(usrid, usrname)
                 flask_login.login_user(user)
-                return render_template('manager.html', usrname=usrname) 
+                return redirect(url_for('manager'))
             else:
                 user = User(usrid, usrname)
                 flask_login.login_user(user)
@@ -83,6 +83,51 @@ def area():
     user = flask_login.current_user   
     return render_template('area.html', usrname=user.name)
 
+@app.route('/manager', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@flask_login.login_required
+def manager():
+    error = None
+    if request.method == 'POST':
+        mode = request.form['username']
+        soil = request.form['soil']
+        temp = request.form['temp']
+        humid = request.form['humid']
+        status = request.form['status']
+        spraymode = request.form['spraymode']
+        amountwater = request.form['amountwater']
+        time = request.form['time']
+        createtime = request.form['createtime']
+        if database.getIdbyName(mode) != None:
+            flash('Mode already exists. Please try another name!', category='error')
+        else:            
+            database.addModes(mode, soil, temp, humid, status, spraymode, amountwater, time, createtime)
+            flash('Create successful!', category='susscess')
+    if request.method == 'PUT':
+        rowid = request.form['rowid']
+        mode = request.form['username']
+        soil = request.form['soil']
+        temp = request.form['temp']
+        humid = request.form['humid']
+        status = request.form['status']
+        spraymode = request.form['spraymode']
+        amountwater = request.form['amountwater']
+        time = request.form['time']
+        createtime = request.form['createtime']
+        if database.getIdbyName(mode) != None:
+            flash('Mode already exists. Please try another name!', category='error')
+        else:
+            database.updateModes(rowid, mode, soil, temp, humid, status, spraymode, amountwater, time, createtime)
+            flash('Update successful!', category='susscess')
+    if request.method == 'DELETE':
+        mode = request.form['username']
+        if database.getIdbyName(mode) != None:
+            flash('Error!!!', category='error')
+        else:
+            database.deleteModes(mode)
+            flash('Delete successful!', category='susscess')
+    modes = database.getModes()
+    user = flask_login.current_user   
+    return render_template('manager.html', usrname=user.name, modes = modes)
 
 
 if __name__ == '__main__':    
