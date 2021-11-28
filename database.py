@@ -69,3 +69,50 @@ def getIdNameByUserName(username, password):
         return rows[0][0], rows[0][1], rows[0][2]
     else:
         return None
+
+def getModes():
+    con = connectDatabase(DATABASE)
+    cur = con.cursor()
+    cur.execute("SELECT * FROM Modes")
+    rows = cur.fetchall()
+    con.commit()
+    con.close()
+    if rows:
+        return rows
+    else: return 0
+
+def addModes(mode, soil, temp, humid, status, spraymode, amountwater, time, createtime):
+    con = connectDatabase(DATABASE)
+    cur = con.cursor()
+    cur.execute("INSERT INTO Modes(Mode, Soil, Temp, Humid, Status, SprayMode, AmountWater, Time, CreateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (mode, soil, temp, humid, status, spraymode, amountwater, time, createtime))
+    con.commit()
+    con.close()
+    return True
+
+def updateModes(rowid, mode, soil, temp, humid, status, spraymode, amountwater, time, createtime):
+    con = connectDatabase(DATABASE)
+    cur = con.cursor()
+    cur.execute("UPDATE Modes SET Mode= ?, Soil= ?, Temp=?, Humid=?, Status=?, SprayMode=?, AmountWater=?, Time=?, CreateTime=? WHERE rowid=?" , (mode, soil, temp, humid, status, spraymode, amountwater, time, createtime, rowid))
+    con.commit()
+    con.close()
+    return True
+
+def deleteModes(mode):
+    con = connectDatabase(DATABASE)
+    cur = con.cursor()
+    cur.execute("DELETE FROM Modes WHERE Mode = ?", [mode])
+    con.commit()
+    con.close()
+    return True
+
+def getIdbyName(ModeName):
+    con = connectDatabase(DATABASE)
+    cur = con.cursor()
+    cur.execute("SELECT rowid from Modes WHERE Mode=?", [ModeName])
+    rows = cur.fetchall()
+    con.commit()
+    con.close()
+    if rows:
+        return rows[0][0]
+    else:
+        return None
