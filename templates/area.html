@@ -1,121 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<meta charset="UTF-8">
-<title>Watering System</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="">
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, Helvetica, sans-serif;
-        color: white;
-    }
-    #container{
-        width: 100%;
-    }
-    #menu{
-        background-color: rgb(84,84,84);
-        width: 100%;
-        height: 120px;
-    }
-    #logo{
-        width: 8%;
-        float: left;
-        height: 120px;
-        position: relative;
-    }
-    #logo img {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        width: 100%;
-    }
-    #selection {
-        float: left;
-        height: 100%;
-        width: 60%;
-        display: table;
-    }
-    #id {
-        width: 20%;
-    }
-    #selection ul{
-        display: table-cell;
-        vertical-align: middle;
-    }   
-    #selection li{
-        display: inline-block;
-        color:  white;
-        line-height: 45px;
-        width: 20%;
-        text-align: center;
-    }
-    #selection li:hover {
-        background-color: rgb(128, 128, 128);
-        cursor: pointer;
-    }
-    #logout {
-        float: right;
-    }
-    #general {
-        padding-top: 20px;
-        width: 100%;
-        height: 450px;
-        background-color: rgb(254, 254, 242);
-    }
-
-
-    #plant-name {
-        width: 20%;
-        height: 120px;
-        background-image: url("../static/img/area_bg.png");
-        background-size:100% 100%;
-        background-repeat: no-repeat;
-        margin-left: 5%;
-        margin-top: 5px;
-        border-radius: 5px;
-        float: left;
-    }
-
-    #plant-name p {
-        margin-top: 2%;
-        margin-left: 6%;
-    }
-    a {
-        text-decoration: none;
-    }
-</style>
-
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/grid.css">
+    <link rel="stylesheet" href="../static/css/form-login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="../static/font/fontawesome-free-5.15.4-web/css/all.css">
+</head>
 <body>
-    <div id="container">
-        <div id="menu">
-            <div id="logo"><img src="../static/img/logo.png"></div>
-            <div id="selection">
-                <ul>
-                    <li>Trang chủ</li>
-                    <li style="background-color: rgb(128, 128, 128);">Khu vực</li>
-                    <li>Quản lý chế độ tưới</li>
-                    <li id="logout">Đăng xuất</li>
+    <div id="container" class="grid">
+        <div id="nav-bar" class="row no-gutter">
+            <div class="col l-3">
+                <a href="{{ url_for('index') }}"><img src="../static/img/logo.png" alt="logo" width="90px" height="75px"></a>
+            </div>
+            <div class="col l-6">
+                <ul id="navigation">
+                    <li><a href="{{ url_for('index') }}">Trang chủ</a></li>
+                    <li><a href="{{ url_for('area') }}">Khu vực</a></li>
+                    <li><a href="{{ url_for('manager') }}">Quản lý chế độ tưới</a></li>
                 </ul>
             </div>
-            <img id="avatar" src="../static/img/avatar.png">
+            <div class="col l-3">
+                <a href=""><i class="icon-account fas fa-user-circle"></i></a>
+                <a href="{{ url_for('logout') }}">
+                    <button type="button" class="btn-nav">Đăng xuất</button>
+                </a>
+            </div>
         </div>
-        <div id="general">
-            <a href="detail_auto.html" id="plant-name">
-                <p>Khu vực 1</p>
-                <p>Cây cà chua</p>
-            </a>
-            <a href="detail_auto.html" id="plant-name">
-                <p>Khu vực 1</p>
-                <p>Cây cà chua</p>
-            </a>
-            <a href="detail_auto.html" id="plant-name">
-                <p>Khu vực 1</p>
-                <p>Cây cà chua</p>
-            </a>
-
+        <div class="row no-gutter">
+            <div class="col l-3">
+            </div>
+            <div class="col l-6">
+                <ul id="navigation">
+                    <li><a href="{{ url_for('detailhand') }}">Khu vực 1</a></li>
+                    <li><a href="{{ url_for('detailhand') }}">Khu vực 2</a></li>
+                    <li><a href="{{ url_for('detailhand') }}">Khu vực 3</a></li>
+                </ul>
+            </div>
+            <div class="col l-3">
+            </div>
         </div>
     </div>
 </body>
