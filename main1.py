@@ -158,5 +158,6 @@ def detailauto():
     user = flask_login.current_user   
     return render_template('detail_hand.html', usrname=user.name)
 
+
 if __name__ == '__main__':    
     app.run(debug=True)
