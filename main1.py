@@ -62,7 +62,7 @@ def login():
             else:
                 user = User(usrid, usrname)
                 flask_login.login_user(user)
-                return render_template(url_for('userhomepage'), usrname=usrname) 
+                return redirect(url_for('userhomepage')) 
             
     return render_template('login.html')
 
@@ -149,15 +149,87 @@ def manager():
 @app.route('/detailhand')
 @flask_login.login_required
 def detailhand():
+    air = database.getLastAir()
+    soil = database.getLastSoil()
+    pump = database.getLastPump()
     user = flask_login.current_user   
-    return render_template('detail_hand.html', usrname=user.name)
+    return render_template('detail_hand.html', usrname=user.name, airs = air, soils = soil, pumps = pump)
 
 @app.route('/detailauto')
 @flask_login.login_required
 def detailauto():
+    air = database.getLastAir()
+    soil = database.getLastSoil()
+    pump = database.getLastPump()
     user = flask_login.current_user   
-    return render_template('detail_hand.html', usrname=user.name)
+    return render_template('detail_auto.html', usrname=user.name, airs = air, soils = soil, pumps = pump)
 
+@app.route('/temp')
+def temp():
+    def generate():
+        yield str(database.getLastAir()[0])
+    return Response(generate(), mimetype='text')
 
+@app.route('/humid')
+def humid():
+    def generate():
+        yield str(database.getLastAir()[1])
+    return Response(generate(), mimetype='text')
+
+@app.route('/soil')
+def soil():
+    def generate():
+        yield str(database.getLastSoil()[0])
+    return Response(generate(), mimetype='text')
+
+@app.route('/relay')
+def relay():
+    def generate():
+        yield str(database.getLastPump()[0])
+    return Response(generate(), mimetype='text')
+
+def getDataFromServer():
+    threading.Timer(20.0, getDataFromServer).start()
+    hcm_time_zone = pytz.timezone("Asia/Ho_Chi_Minh")
+    temp_humid_server = aio.receive('bk-iot-temp-humid')
+    timestamp_th = datetime.datetime.strptime(temp_humid_server[1], '%Y-%m-%dT%H:%M:%S%z')
+    timestamp_th = timestamp_th.astimezone(hcm_time_zone)
+    if str(timestamp_th) != database.getLastAir()[2]:
+        data = temp_humid_server[3]
+        data = data.replace("'", '"')
+        data = json.loads(data)
+        pos_minus = data['data'].find('-')
+        temp = data['data'][:pos_minus]
+        humid = data['data'][pos_minus + 1:]
+        database.insertAir(temp, humid, timestamp_th)
+    else:
+        pass
+    soil_server = aio.receive('bk-iot-soil')
+    timestamp_s = datetime.datetime.strptime(soil_server[1], '%Y-%m-%dT%H:%M:%S%z')
+    timestamp_s = timestamp_s.astimezone(hcm_time_zone)
+    if str(timestamp_s) != database.getLastSoil()[1]:
+        data = soil_server[3]
+        data = data.replace("'", '"')
+        data = json.loads(data)
+        soil = data['data']
+        database.insertSoil(soil, timestamp_s)
+    else:
+        pass
+    
+    relay_server = aio.receive('bk-iot-relay')
+    timestamp_p = datetime.datetime.strptime(relay_server[1], '%Y-%m-%dT%H:%M:%S%z')
+    timestamp_p = timestamp_p.astimezone(hcm_time_zone)
+    if str(timestamp_p) != database.getLastPump()[1]:
+        data = relay_server[3]
+        data = data.replace("'", '"')
+        data = json.loads(data)
+        relay = data['data']  
+        if relay == '1':
+            database.insertPump('ON', timestamp_p)
+        else:
+            database.insertPump('OFF', timestamp_p)
+    else: pass
+
+getDataFromServer()
 if __name__ == '__main__':    
     app.run(debug=True)
