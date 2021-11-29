@@ -116,3 +116,61 @@ def getIdbyName(ModeName):
         return rows[0][0]
     else:
         return None
+
+def insertAir(temp, humid, timestamp):
+    con = connectDatabase(DATABASE)
+    cur = con.cursor()
+    cur.execute("INSERT INTO Airs values (?, ?, ?)", (temp, humid, timestamp))
+    con.commit()
+    con.close()
+    return True
+
+def insertSoil(soil, timestamp):
+    con = connectDatabase(DATABASE)
+    cur = con.cursor()
+    cur.execute("INSERT INTO Soils values (?, ?)", (soil, timestamp))
+    con.commit()
+    con.close()
+    return True
+
+def insertPump(status, timestamp):
+    con = connectDatabase(DATABASE)
+    cur = con.cursor()
+    cur.execute("INSERT INTO Pumps values (?, ?)", (status, timestamp))
+    con.commit()
+    con.close()
+    return True
+
+def getLastAir():
+    con = connectDatabase(DATABASE)
+    cur = con.cursor()
+    cur.execute("SELECT * FROM Airs ORDER BY Timestamp DESC LIMIT 1;")
+    rows = cur.fetchall()
+    con.commit()
+    con.close()
+    if rows:
+        return rows[0][0], rows[0][1], rows[0][2]
+    else:
+        return 0, 0, 0
+
+def getLastSoil():
+    con = connectDatabase(DATABASE)
+    cur = con.cursor()
+    cur.execute("SELECT * FROM Soils ORDER BY Timestamp DESC LIMIT 1;")
+    rows = cur.fetchall()
+    con.commit()
+    con.close()
+    if rows:
+        return rows[0][0], rows[0][1]
+    else: return 0, 0
+
+def getLastPump():
+    con = connectDatabase(DATABASE)
+    cur = con.cursor()
+    cur.execute("SELECT * FROM Pumps ORDER BY Timestamp DESC LIMIT 1;")
+    rows = cur.fetchall()
+    con.commit()
+    con.close()
+    if rows:
+        return rows[0][0], rows[0][1]
+    else: return 0, 0
