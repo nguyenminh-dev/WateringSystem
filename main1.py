@@ -7,12 +7,16 @@ import flask_login
 import database
 import connectBBC1
 from Adafruit_IO import Client
+from flask_wtf import FlaskForm
+from wtforms import SubmitField
+from flask_bootstrap import Bootstrap
 
-ADAFRUIT_IO_USERNAME = "nguyenminh"
-ADAFRUIT_IO_KEY = "aio_SCDj76SgM1gB7kffAsd8MSP7L3N8"
+ADAFRUIT_IO_USERNAME = "nguyenngoc"
+ADAFRUIT_IO_KEY = "aio_pxwm06skCqgXBTCHqSB7PwAVf9lP"
 aio=Client(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
 
 app = Flask(__name__)
+Bootstrap(app)
 app.secret_key = 'hcmutk18'
 
 login_manager = flask_login.LoginManager()
@@ -146,14 +150,23 @@ def manager():
     user = flask_login.current_user   
     return render_template('manager.html', usrname=user.name, modes = modes)
 
-@app.route('/detailhand')
+class PowerState(FlaskForm) :
+    state = SubmitField('OFF')
+
+@app.route('/detailhand', methods=['GET', 'POST'])
 @flask_login.login_required
 def detailhand():
+    form = PowerState()
+    if form.validate_on_submit() :
+        if form.state.label.text == 'OFF' :
+            PowerState.state = SubmitField('ON')
+        elif form.state.label.text == 'ON' :
+            PowerState.state = SubmitField('OFF')
     air = database.getLastAir()
     soil = database.getLastSoil()
     pump = database.getLastPump()
     user = flask_login.current_user   
-    return render_template('detail_hand.html', usrname=user.name, airs = air, soils = soil, pumps = pump)
+    return render_template('detail_hand.html', usrname=user.name, airs = air, soils = soil, pumps = pump, form=form)
 
 @app.route('/detailauto')
 @flask_login.login_required
@@ -187,6 +200,22 @@ def relay():
     def generate():
         yield str(database.getLastPump()[0])
     return Response(generate(), mimetype='text')
+
+
+def autoWatering(temp, humid, soil):
+    threading.Timer(20.0, autoWatering).start()
+    temp1 = database.getLastAir()[0]
+    humid1 = database.getLastAir()[1]
+    soil1 = database.getLastSoil()[0]
+    pump = database.getLastPump()[0]
+    if soil1 < soil:
+        if temp1 < temp and humid1 > humid and pump == 'OFF':
+            data = {"id":"11", "name":"RELAY", "data":"1", "unit":""}
+            connectBBC1.PublishData(data)
+    if soil1 > 450:
+        if temp1 < temp and humid1 > humid and pump == 'ON':
+            data = {"id":"11", "name":"RELAY", "data":"0", "unit":""}
+            connectBBC1.PublishData(data)
 
 def getDataFromServer():
     threading.Timer(20.0, getDataFromServer).start()

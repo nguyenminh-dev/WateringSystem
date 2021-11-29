@@ -350,14 +350,8 @@ input:checked + .slider:before {
                             <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
                         </div>
                     </div>
-                    <div class="row switch-button">
-                        <label class="switch">
-                            <input type="checkbox" id="switch">
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
+                    
                 </form>
-
             </div>
         </div>
     </div>
@@ -385,16 +379,6 @@ input:checked + .slider:before {
             fetch("{{ url_for('soil') }}").then((response) => {
             response.text().then((t) => {
             soil.innerHTML = t;
-            });
-        });
-    }, 10000);
-    
-    var relay = document.getElementById("relay");
-        setInterval(() => {
-            fetch("{{ url_for('relay') }}").then((response) => {
-            response.text().then((t) => {
-            if (relay.innerHTML != "Status: " + t){
-            relay.innerHTML = "Status: " + t;}
             });
         });
     }, 10000);
