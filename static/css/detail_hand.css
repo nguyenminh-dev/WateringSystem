@@ -1,0 +1,257 @@
+* {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        color: white;
+    }
+    #container{
+        width: 100%;
+    }
+    #menu{
+        background-color: rgb(84,84,84);
+        width: 100%;
+        height: 120px;
+    }
+    #logo{
+        width: 8%;
+        float: left;
+        height: 120px;
+        position: relative;
+    }
+    #logo img {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        width: 100%;
+    }
+    #selection {
+        float: left;
+        height: 100%;
+        width: 60%;
+        display: table;
+    }
+    #selection ul{
+        display: table-cell;
+        vertical-align: middle;
+    }   
+    #selection li{
+        display: inline-block;
+        color:  white;
+        line-height: 45px;
+        width: 20%;
+        text-align: center;
+    }
+    #selection li:hover {
+        background-color: rgb(128, 128, 128);
+        cursor: pointer;
+    }
+    #logout {
+        float: right;
+    }
+    #general {
+        height: 450px;
+        background-color: rgb(254, 254, 242);
+    }
+    #left {
+        float: left;
+        width: 35%;
+
+    }
+    #plant {
+        width: 100%;
+        height: 280px;
+    }
+    #plant-name, #mode-name {
+        width: 40%;
+        height: 80px;
+        background-image: url("../img/area_bg.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        margin-left: 5%;
+        margin-top: 5px;
+        border-radius: 5px;
+        float: left;
+    }
+    #plant p {
+        margin-top: 10px;
+        margin-left: 5%;
+    }
+    #plant-index, #mode-choice {
+        width: 40%;
+        height: 80px;
+        float: left;
+        margin-left: 5%;
+    }
+    #plant-index li, #mode-choice li {
+        width: 100%;
+        height: 80px;
+        background-color: rgb(51, 142, 151);
+        margin-top: 5px;
+        border-radius: 5px;
+        list-style: none;
+    }
+    #plant-index p, #mode-choice p {
+        text-align: center;
+        padding-top: 7px;
+    }
+    .number {
+        font-size: 190%;
+    }
+    #mode-name, #mode-choice li {
+        text-align: center;
+        display: table;
+    }
+    #mode-name p, #mode-choice p {
+        display: table-cell;
+        vertical-align: middle;
+    }
+    #watering-mode {
+        width: 100%;
+        height: 280px;
+    }
+
+    #selected-mode {
+        border-color: yellow;
+        border-style: solid;
+    }
+
+    #option-table {
+        float: left;
+        width: 60%;
+        border-color: rgb(46, 240, 227);
+        border-style: solid;
+        min-height: 400px;
+        margin-top: 5px;
+
+
+    }
+    #table-title {
+        width: 100%;
+        height: 60px;
+        background-color: rgb(81, 214, 102);
+        display: table;
+        text-align: center;
+    }
+    #table-title p {
+        display: table-cell;
+        vertical-align: middle;
+    }
+    #table-index {
+        width: 100%;
+    }
+    #table-index p {
+        text-align: center;
+        margin-top: 30px;
+        color: blue;
+    }
+
+#watering-shape {
+    text-align: center;
+    margin-top: 20px;
+}
+.labl {
+    display: inline-block;
+    
+
+    border-radius: 20px;
+    text-align: center;
+}
+.lab1 div {
+    color: green;
+
+}
+.labl > input{ /* HIDE RADIO */
+    visibility: hidden; /* Makes input not-clickable */
+    position: absolute; /* Remove input from document flow */
+}
+.labl > input + div{ /* DIV STYLES */
+    cursor:pointer;
+    border:2px solid transparent;border-radius: 20px;
+    height: 40px;
+    display: table-cell;
+    vertical-align: middle;
+    width: 50%;
+}
+.labl > input:checked + div{ /* (RADIO CHECKED) DIV STYLES */
+    background-color: yellow;
+    border: 1px solid #ff6600;
+}
+
+
+.slidecontainer {
+    display: flex;
+    justify-content: center;
+}
+
+.slidecontainer input {
+    position: static;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+}
+
+ .switch-button {
+        display: flex;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(255, 0, 0);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: rgb(0, 0, 0);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #01f854;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
