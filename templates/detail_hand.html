@@ -109,5 +109,43 @@
         </div>
     </div>
 <script src="../static/js/detail_hand.js"></script>
+<script>
+    var temp = document.getElementById("temp");
+        setInterval(() => {
+            fetch("{{ url_for('temp') }}").then((response) => {
+            response.text().then((t, s) => {
+            temp.innerHTML = t + "\xB0 C";
+            });
+        });
+    }, 10000);
+
+    var humidity = document.getElementById("humid");
+        setInterval(() => {
+            fetch("{{ url_for('humid') }}").then((response) => {
+            response.text().then((t) => {
+            humidity.innerHTML = t + " %";
+            });
+        });
+    }, 10000);
+
+    var soil = document.getElementById("soil");
+        setInterval(() => {
+            fetch("{{ url_for('soil') }}").then((response) => {
+            response.text().then((t) => {
+            soil.innerHTML = t;
+            });
+        });
+    }, 10000);
+    
+    var relay = document.getElementById("relay");
+        setInterval(() => {
+            fetch("{{ url_for('relay') }}").then((response) => {
+            response.text().then((t) => {
+            if (relay.innerHTML != "Status: " + t){
+            relay.innerHTML = "Status: " + t;}
+            });
+        });
+    }, 10000);
+</script>
 </body>
 </html>

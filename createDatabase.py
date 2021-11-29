@@ -31,7 +31,8 @@ cur = con.cursor()
 #     SprayMode TEXT, 
 #     AmountWater REAL,
 #     Time REAL, 
-#     CreateTime DATE
+#     CreateTime DATE,
+#     Code INT NOT NULL UNIQUE
 # )
 # """)
 
@@ -58,15 +59,15 @@ cur = con.cursor()
 # """)
 
 
-# password = 'admin'
-# passwordhash = hashlib.md5(password.encode('utf8')).hexdigest()
-# cur.execute("INSERT INTO Users(UserName, Email, PhoneNumber, Password, Role) VALUES (?, ?, ?, ?, ?)", ('admin', 'admin@123', '123', passwordhash, 'Admin'))
-# cur.execute("INSERT INTO Modes(Mode, Soil, Temp, Humid, Status, SprayMode, AmountWater, Time, CreateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", ('Cây cà chua', 50, 100, 150, 1, 'Phun sương', 10, 90, '2021-11-28'))
-# cur.execute("INSERT INTO Modes(Mode, Soil, Temp, Humid, Status, SprayMode, AmountWater, Time, CreateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", ('Cây rau cải', 50, 100, 150, 1, 'Phun sương', 10, 90, '2021-11-28'))
-# cur.execute("INSERT INTO Modes(Mode, Soil, Temp, Humid, Status, SprayMode, AmountWater, Time, CreateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", ('Cây vải', 50, 100, 150, 1, 'Phun sương', 10, 90, '2021-11-28'))
-# cur.execute("INSERT INTO Airs values (?, ?, ?)", (30,50,'2021-11-29 16:24:42+07:00'))
-# cur.execute("INSERT INTO Soils values (?, ?)", (60,'2021-11-29 16:24:42+07:00'))
-# cur.execute("INSERT INTO Pumps values (?, ?)", ('ON','2021-11-29 16:24:42+07:00'))
+password = 'admin'
+passwordhash = hashlib.md5(password.encode('utf8')).hexdigest()
+cur.execute("INSERT INTO Users(UserName, Email, PhoneNumber, Password, Role) VALUES (?, ?, ?, ?, ?)", ('admin', 'admin@123', '123', passwordhash, 'Admin'))
+cur.execute("INSERT INTO Modes(Mode, Soil, Temp, Humid, Status, SprayMode, AmountWater, Time, CreateTime, Code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", ('Cây cà chua', 50, 100, 150, 1, 'Phun sương', 10, 90, '2021-11-28', 1))
+cur.execute("INSERT INTO Modes(Mode, Soil, Temp, Humid, Status, SprayMode, AmountWater, Time, CreateTime, Code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", ('Cây rau cải', 50, 100, 150, 1, 'Phun sương', 10, 90, '2021-11-28', 2))
+cur.execute("INSERT INTO Modes(Mode, Soil, Temp, Humid, Status, SprayMode, AmountWater, Time, CreateTime, Code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", ('Cây vải', 50, 100, 150, 1, 'Phun sương', 10, 90, '2021-11-28', 3))
+cur.execute("INSERT INTO Airs values (?, ?, ?)", (30,50,'2021-11-29 16:24:42+07:00'))
+cur.execute("INSERT INTO Soils values (?, ?)", (60,'2021-11-29 16:24:42+07:00'))
+cur.execute("INSERT INTO Pumps values (?, ?)", ('ON','2021-11-29 16:24:42+07:00'))
 cur.execute('SELECT * FROM Users')
 
 result = cur.fetchall()

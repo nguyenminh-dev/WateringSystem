@@ -11,12 +11,11 @@ from flask_wtf import FlaskForm
 from wtforms import SubmitField
 from flask_bootstrap import Bootstrap
 
-ADAFRUIT_IO_USERNAME = "nguyenngoc"
-ADAFRUIT_IO_KEY = "aio_pxwm06skCqgXBTCHqSB7PwAVf9lP"
+ADAFRUIT_IO_USERNAME = "nguyenminh"
+ADAFRUIT_IO_KEY = "aio_SCDj76SgM1gB7kffAsd8MSP7L3N8"
 aio=Client(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
 
 app = Flask(__name__)
-Bootstrap(app)
 app.secret_key = 'hcmutk18'
 
 login_manager = flask_login.LoginManager()
@@ -104,7 +103,7 @@ def adminhomepage():
     user = flask_login.current_user   
     return render_template('Admin-homepage.html', usrname=user.name)
 
-@app.route('/manager', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@app.route('/manager', methods=['GET', 'POST', 'PUT'])
 @flask_login.login_required
 def manager():
     error = None
@@ -118,6 +117,7 @@ def manager():
         amountwater = request.form['amountwater']
         time = request.form['time']
         createtime = request.form['createtime']
+        code = request.form['code']
         if database.getIdbyName(mode) != None:
             flash('Mode already exists. Please try another name!', category='error')
         else:            
@@ -134,39 +134,32 @@ def manager():
         amountwater = request.form['amountwater']
         time = request.form['time']
         createtime = request.form['createtime']
+        code = request.form['code']
         if database.getIdbyName(mode) != None:
             flash('Mode already exists. Please try another name!', category='error')
         else:
-            database.updateModes(rowid, mode, soil, temp, humid, status, spraymode, amountwater, time, createtime)
+            database.updateModes(rowid, mode, soil, temp, humid, status, spraymode, amountwater, time, createtime, code)
             flash('Update successful!', category='susscess')
-    if request.method == 'DELETE':
-        mode = request.form['username']
-        if database.getIdbyName(mode) != None:
-            flash('Error!!!', category='error')
-        else:
-            database.deleteModes(mode)
-            flash('Delete successful!', category='susscess')
+    
     modes = database.getModes()
     user = flask_login.current_user   
     return render_template('manager.html', usrname=user.name, modes = modes)
 
-class PowerState(FlaskForm) :
-    state = SubmitField('OFF')
+@app.route('/delete/<int:code>')
+@flask_login.login_required
+def deleteMode(code):
+    database.deleteModes(code)
+    flash('Delete successful!', category='susscess')
+    return redirect(url_for('manager'))
 
 @app.route('/detailhand', methods=['GET', 'POST'])
 @flask_login.login_required
 def detailhand():
-    form = PowerState()
-    if form.validate_on_submit() :
-        if form.state.label.text == 'OFF' :
-            PowerState.state = SubmitField('ON')
-        elif form.state.label.text == 'ON' :
-            PowerState.state = SubmitField('OFF')
     air = database.getLastAir()
     soil = database.getLastSoil()
     pump = database.getLastPump()
     user = flask_login.current_user   
-    return render_template('detail_hand.html', usrname=user.name, airs = air, soils = soil, pumps = pump, form=form)
+    return render_template('detail_hand.html', usrname=user.name, airs = air, soils = soil, pumps = pump)
 
 @app.route('/detailauto')
 @flask_login.login_required

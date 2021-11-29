@@ -43,14 +43,14 @@
                         <ul>
                             <li>
                                 <p>Độ ẩm đất</p>
-                                <p class="number">60%</p>
+                                <p class="number" id="soil">0</p>
                             </li>
                             <li>
                                 <p>Độ ẩm không khí</p>
-                                <p class="number">70%</p>
+                                <p class="number" id="humid">0 &#37;</p>
                             </li><li>
                                 <p>Nhiệt độ</p>
-                                <p class="number">60%</p>
+                                <p class="number" id="temp">0 &deg;C</p>
                             </li>
                         </ul>
                     </div>
@@ -80,33 +80,33 @@
                 <div id="table-index">
                     
                         <table>
-                          <tr>
-                            <td>Chế độ tưới</td>
-                            <td>
+                            <tr>
+                                <td>Chế độ tưới</td>
+                                <td>
 
-                                <div class="custom-select">
-                                  <select>
-                                    <option value="0">Chọn cây trồng</option>
-                                    <option value="1">Cây cà chua</option>
-                                    <option value="2">Cây cam</option>
-                                    <option value="3">Cây mít</option>
-                                  </select>
-                                </div>
+                                    <div class="custom-select">
+                                    <select>
+                                        <option value="0">Chọn cây trồng</option>
+                                        <option value="1">Cây cà chua</option>
+                                        <option value="2">Cây cam</option>
+                                        <option value="3">Cây mít</option>
+                                    </select>
+                                    </div>
 
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Độ ẩm đất (%)</td>
-                            <td><input type="text" id="doamdat" name="doamda" value="100" readonly></td>
-                          </tr>
-                          <tr>
-                            <td>Độ ẩm không khí (%)</td>
-                            <td><input type="text" id="doamdat" name="doamda" value="100" readonly></td>
-                          </tr>
-                          <tr>
-                            <td>Nhiệt độ (độ C)</td>
-                            <td><input type="text" id="doamdat" name="doamda" value="100" readonly></td>
-                          </tr>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Độ ẩm đất (%)</td>
+                                <td><input type="text" id="doamdat" name="doamda" value="100" readonly></td>
+                            </tr>
+                            <tr>
+                                <td>Độ ẩm không khí (%)</td>
+                                <td><input type="text" id="doamdat" name="doamda" value="100" readonly></td>
+                            </tr>
+                            <tr>
+                                <td>Nhiệt độ (độ C)</td>
+                                <td><input type="text" id="doamdat" name="doamda" value="100" readonly></td>
+                            </tr>
                         </table>
                         <div class="row switch-button">
                             <label class="switch">
@@ -114,16 +114,50 @@
                                 <span class="slider round"></span>
                             </label>
                         </div>
-                    
                 </div>
-
-                
-
             </div>
 
 
         </div>
     </div>
 <script src="../static/js/detail_auto.js"></script>
+<script>
+    var temp = document.getElementById("temp");
+        setInterval(() => {
+            fetch("{{ url_for('temp') }}").then((response) => {
+            response.text().then((t, s) => {
+            temp.innerHTML = t + "\xB0 C";
+            });
+        });
+    }, 10000);
+
+    var humidity = document.getElementById("humid");
+        setInterval(() => {
+            fetch("{{ url_for('humid') }}").then((response) => {
+            response.text().then((t) => {
+            humidity.innerHTML = t + " %";
+            });
+        });
+    }, 10000);
+
+    var soil = document.getElementById("soil");
+        setInterval(() => {
+            fetch("{{ url_for('soil') }}").then((response) => {
+            response.text().then((t) => {
+            soil.innerHTML = t;
+            });
+        });
+    }, 10000);
+    
+    var relay = document.getElementById("relay");
+        setInterval(() => {
+            fetch("{{ url_for('relay') }}").then((response) => {
+            response.text().then((t) => {
+            if (relay.innerHTML != "Status: " + t){
+            relay.innerHTML = "Status: " + t;}
+            });
+        });
+    }, 10000);
+</script>
 </body>
 </html>

@@ -81,26 +81,26 @@ def getModes():
         return rows
     else: return 0
 
-def addModes(mode, soil, temp, humid, status, spraymode, amountwater, time, createtime):
+def addModes(mode, soil, temp, humid, status, spraymode, amountwater, time, createtime, code):
     con = connectDatabase(DATABASE)
     cur = con.cursor()
-    cur.execute("INSERT INTO Modes(Mode, Soil, Temp, Humid, Status, SprayMode, AmountWater, Time, CreateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (mode, soil, temp, humid, status, spraymode, amountwater, time, createtime))
+    cur.execute("INSERT INTO Modes(Mode, Soil, Temp, Humid, Status, SprayMode, AmountWater, Time, CreateTime, Code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (mode, soil, temp, humid, status, spraymode, amountwater, time, createtime, code))
     con.commit()
     con.close()
     return True
 
-def updateModes(rowid, mode, soil, temp, humid, status, spraymode, amountwater, time, createtime):
+def updateModes(rowid, mode, soil, temp, humid, status, spraymode, amountwater, time, createtime, code):
     con = connectDatabase(DATABASE)
     cur = con.cursor()
-    cur.execute("UPDATE Modes SET Mode= ?, Soil= ?, Temp=?, Humid=?, Status=?, SprayMode=?, AmountWater=?, Time=?, CreateTime=? WHERE rowid=?" , (mode, soil, temp, humid, status, spraymode, amountwater, time, createtime, rowid))
+    cur.execute("UPDATE Modes SET Mode= ?, Soil= ?, Temp=?, Humid=?, Status=?, SprayMode=?, AmountWater=?, Time=?, CreateTime=?, Code=? WHERE rowid=?" , (mode, soil, temp, humid, status, spraymode, amountwater, time, createtime, code, rowid))
     con.commit()
     con.close()
     return True
 
-def deleteModes(mode):
+def deleteModes(code):
     con = connectDatabase(DATABASE)
     cur = con.cursor()
-    cur.execute("DELETE FROM Modes WHERE Mode = ?", [mode])
+    cur.execute("DELETE FROM Modes WHERE Code = ?", [code])
     con.commit()
     con.close()
     return True
