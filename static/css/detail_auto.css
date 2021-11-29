@@ -1,0 +1,286 @@
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        color: white;
+    }
+    #container{
+        width: 100%;
+    }
+    #menu{
+        background-color: rgb(84,84,84);
+        width: 100%;
+        height: 120px;
+    }
+    #logo{
+        width: 8%;
+        float: left;
+        height: 120px;
+        position: relative;
+    }
+    #logo img {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        width: 100%;
+    }
+    #selection {
+        float: left;
+        height: 100%;
+        width: 60%;
+        display: table;
+    }
+    #selection ul{
+        display: table-cell;
+        vertical-align: middle;
+    }   
+    #selection li{
+        display: inline-block;
+        color:  white;
+        line-height: 45px;
+        width: 20%;
+        text-align: center;
+    }
+    #selection li:hover {
+        background-color: rgb(128, 128, 128);
+        cursor: pointer;
+    }
+    #logout {
+        float: right;
+    }
+    #general {
+        height: 450px;
+        background-color: rgb(254, 254, 242);
+    }
+    #left {
+        float: left;
+        width: 35%;
+
+    }
+    #plant {
+        width: 100%;
+        height: 280px;
+    }
+    #plant-name, #mode-name {
+        width: 40%;
+        height: 80px;
+        background-image: url("../img/area_bg.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        margin-left: 5%;
+        margin-top: 5px;
+        border-radius: 5px;
+        float: left;
+    }
+    #plant p {
+        margin-top: 10px;
+        margin-left: 5%;
+    }
+    #plant-index, #mode-choice {
+        width: 40%;
+        height: 80px;
+        float: left;
+        margin-left: 5%;
+    }
+    #plant-index li, #mode-choice li {
+        width: 100%;
+        height: 80px;
+        background-color: rgb(51, 142, 151);
+        margin-top: 5px;
+        border-radius: 5px;
+        list-style: none;
+    }
+    #plant-index p, #mode-choice p {
+        text-align: center;
+        padding-top: 7px;
+    }
+    .number {
+        font-size: 190%;
+    }
+    #mode-name, #mode-choice li {
+        text-align: center;
+        display: table;
+    }
+    #mode-name p, #mode-choice p {
+        display: table-cell;
+        vertical-align: middle;
+    }
+    #watering-mode {
+        width: 100%;
+        height: 280px;
+    }
+
+    #selected-mode {
+        border-color: yellow;
+        border-style: solid;
+    }
+
+    #option-table {
+        float: left;
+        width: 60%;
+        border-color: rgb(46, 240, 227);
+        border-style: solid;
+        min-height: 400px;
+        margin-top: 5px;
+    }
+    #table-title {
+        width: 100%;
+        height: 60px;
+        background-color: rgb(81, 214, 102);
+        display: table;
+        text-align: center;
+    }
+    #table-title p {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    table, td {
+        background-color: white;
+        font-weight: bold;
+        width: 70%;
+        margin: auto;
+        margin-top: 40px;
+        border:1px solid black;
+        color: black;
+        border-collapse: collapse;
+    }
+    table td {
+        height: 30px;
+        padding-left: 5%;
+        width: 50%;
+    }
+
+    table input {
+        width: 80%;
+        color: black;
+    }
+
+        /*the container must be positioned relative:*/
+    .custom-select {
+      position: relative;
+      font-family: Arial;
+      width: 90%;
+    }
+
+    .custom-select select {
+      display: none; /*hide original SELECT element:*/
+    }
+
+    .select-selected {
+      background-color: gray;
+    }
+
+    /*style the arrow inside the select element:*/
+    .select-selected:after {
+      position: absolute;
+      content: "";
+      top: 14px;
+      right: 10px;
+      width: 0;
+      height: 0;
+      border: 6px solid transparent;
+      border-color: #fff transparent transparent transparent;
+    }
+
+    /*point the arrow upwards when the select box is open (active):*/
+    .select-selected.select-arrow-active:after {
+      border-color: transparent transparent #fff transparent;
+      top: 7px;
+    }
+
+    /*style the items (options), including the selected item:*/
+    .select-items div,.select-selected {
+      color: black;
+      padding: 8px 16px;
+      border: 1px solid transparent;
+      border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /*style items (options):*/
+    .select-items {
+      position: absolute;
+      background-color: gray;
+      top: 100%;
+      left: 0;
+      right: 0;
+      z-index: 99;
+    }
+
+    /*hide the items when the select box is closed:*/
+    .select-hide {
+      display: none;
+    }
+
+    .select-items div:hover, .same-as-selected {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .switch-button {
+        display: flex;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(255, 0, 0);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: rgb(0, 0, 0);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #01f854;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
