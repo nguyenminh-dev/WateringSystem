@@ -7,6 +7,9 @@ import flask_login
 import database
 import connectBBC1
 from Adafruit_IO import Client
+from flask_wtf import FlaskForm
+from wtforms import SubmitField
+from flask_bootstrap import Bootstrap
 
 ADAFRUIT_IO_USERNAME = "nguyenminh"
 ADAFRUIT_IO_KEY = "aio_SCDj76SgM1gB7kffAsd8MSP7L3N8"
@@ -100,7 +103,7 @@ def adminhomepage():
     user = flask_login.current_user   
     return render_template('Admin-homepage.html', usrname=user.name)
 
-@app.route('/manager', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@app.route('/manager', methods=['GET', 'POST', 'PUT'])
 @flask_login.login_required
 def manager():
     error = None
@@ -114,6 +117,7 @@ def manager():
         amountwater = request.form['amountwater']
         time = request.form['time']
         createtime = request.form['createtime']
+        code = request.form['code']
         if database.getIdbyName(mode) != None:
             flash('Mode already exists. Please try another name!', category='error')
         else:            
@@ -130,23 +134,25 @@ def manager():
         amountwater = request.form['amountwater']
         time = request.form['time']
         createtime = request.form['createtime']
+        code = request.form['code']
         if database.getIdbyName(mode) != None:
             flash('Mode already exists. Please try another name!', category='error')
         else:
-            database.updateModes(rowid, mode, soil, temp, humid, status, spraymode, amountwater, time, createtime)
+            database.updateModes(rowid, mode, soil, temp, humid, status, spraymode, amountwater, time, createtime, code)
             flash('Update successful!', category='susscess')
-    if request.method == 'DELETE':
-        mode = request.form['username']
-        if database.getIdbyName(mode) != None:
-            flash('Error!!!', category='error')
-        else:
-            database.deleteModes(mode)
-            flash('Delete successful!', category='susscess')
+    
     modes = database.getModes()
     user = flask_login.current_user   
     return render_template('manager.html', usrname=user.name, modes = modes)
 
-@app.route('/detailhand')
+@app.route('/delete/<int:code>')
+@flask_login.login_required
+def deleteMode(code):
+    database.deleteModes(code)
+    flash('Delete successful!', category='susscess')
+    return redirect(url_for('manager'))
+
+@app.route('/detailhand', methods=['GET', 'POST'])
 @flask_login.login_required
 def detailhand():
     air = database.getLastAir()
@@ -187,6 +193,22 @@ def relay():
     def generate():
         yield str(database.getLastPump()[0])
     return Response(generate(), mimetype='text')
+
+
+def autoWatering(temp, humid, soil):
+    threading.Timer(20.0, autoWatering).start()
+    temp1 = database.getLastAir()[0]
+    humid1 = database.getLastAir()[1]
+    soil1 = database.getLastSoil()[0]
+    pump = database.getLastPump()[0]
+    if soil1 < soil:
+        if temp1 < temp and humid1 > humid and pump == 'OFF':
+            data = {"id":"11", "name":"RELAY", "data":"1", "unit":""}
+            connectBBC1.PublishData(data)
+    if soil1 > 450:
+        if temp1 < temp and humid1 > humid and pump == 'ON':
+            data = {"id":"11", "name":"RELAY", "data":"0", "unit":""}
+            connectBBC1.PublishData(data)
 
 def getDataFromServer():
     threading.Timer(20.0, getDataFromServer).start()
