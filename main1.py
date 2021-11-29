@@ -5,7 +5,12 @@ from flask_socketio import SocketIO
 import json, datetime, time, threading, pytz
 import flask_login
 import database
+import connectBBC1
+from Adafruit_IO import Client
 
+ADAFRUIT_IO_USERNAME = "nguyenminh"
+ADAFRUIT_IO_KEY = "aio_SCDj76SgM1gB7kffAsd8MSP7L3N8"
+aio=Client(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
 
 app = Flask(__name__)
 app.secret_key = 'hcmutk18'
@@ -53,11 +58,11 @@ def login():
             if(role == 'Admin'):
                 user = User(usrid, usrname)
                 flask_login.login_user(user)
-                return redirect(url_for('manager'))
+                return redirect(url_for('adminhomepage'))
             else:
                 user = User(usrid, usrname)
                 flask_login.login_user(user)
-                return render_template('User-homepage.html', usrname=usrname) 
+                return render_template(url_for('userhomepage'), usrname=usrname) 
             
     return render_template('login.html')
 
@@ -82,6 +87,18 @@ def signup():
 def area():
     user = flask_login.current_user   
     return render_template('area.html', usrname=user.name)
+
+@app.route('/userhomepage')
+@flask_login.login_required
+def userhomepage():
+    user = flask_login.current_user   
+    return render_template('User-homepage.html', usrname=user.name)
+
+@app.route('/adminhomepage')
+@flask_login.login_required
+def adminhomepage():
+    user = flask_login.current_user   
+    return render_template('Admin-homepage.html', usrname=user.name)
 
 @app.route('/manager', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @flask_login.login_required
@@ -128,6 +145,18 @@ def manager():
     modes = database.getModes()
     user = flask_login.current_user   
     return render_template('manager.html', usrname=user.name, modes = modes)
+
+@app.route('/detailhand')
+@flask_login.login_required
+def detailhand():
+    user = flask_login.current_user   
+    return render_template('detail_hand.html', usrname=user.name)
+
+@app.route('/detailauto')
+@flask_login.login_required
+def detailauto():
+    user = flask_login.current_user   
+    return render_template('detail_hand.html', usrname=user.name)
 
 
 if __name__ == '__main__':    
