@@ -11,10 +11,11 @@ from flask_wtf import FlaskForm
 from wtforms import SubmitField
 from flask_bootstrap import Bootstrap
 
-ADAFRUIT_IO_USERNAME = "nguyenminh"
-ADAFRUIT_IO_KEY = "aio_SCDj76SgM1gB7kffAsd8MSP7L3N8"
+ADAFRUIT_IO_USERNAME = ""
+ADAFRUIT_IO_KEY = ""
+# ADAFRUIT_IO_USERNAME = "nguyenngoc"
+# ADAFRUIT_IO_KEY = "aio_pxwm06skCqgXBTCHqSB7PwAVf9lP"
 aio=Client(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
-
 app = Flask(__name__)
 app.secret_key = 'hcmutk18'
 
@@ -28,7 +29,7 @@ class User(flask_login.UserMixin):
     def __init__(self, userid, username):
         self.id = userid
         self.name = username
-
+save_data = dict(tuoinuoc=0)
 @login_manager.user_loader
 def load_user(userId):
     userName = database.getNameById(userId)
@@ -157,9 +158,12 @@ def deleteMode(code):
 def detailhand():
     air = database.getLastAir()
     soil = database.getLastSoil()
-    pump = database.getLastPump()
+    if database.getLastPump()[0] == 'OFF':
+        tuoinuoc = 0
+    else:
+        tuoinuoc = 1
     user = flask_login.current_user   
-    return render_template('detail_hand.html', usrname=user.name, airs = air, soils = soil, pumps = pump)
+    return render_template('detail_hand.html', usrname=user.name, airs = air, soils = soil, pumps = tuoinuoc)
 
 @app.route('/detailauto')
 @flask_login.login_required
@@ -194,9 +198,8 @@ def relay():
         yield str(database.getLastPump()[0])
     return Response(generate(), mimetype='text')
 
-
 def autoWatering(temp, humid, soil):
-    threading.Timer(20.0, autoWatering).start()
+    threading.Timer(2.0, autoWatering).start()
     temp1 = database.getLastAir()[0]
     humid1 = database.getLastAir()[1]
     soil1 = database.getLastSoil()[0]
@@ -211,7 +214,7 @@ def autoWatering(temp, humid, soil):
             connectBBC1.PublishData(data)
 
 def getDataFromServer():
-    threading.Timer(20.0, getDataFromServer).start()
+    threading.Timer(2.0, getDataFromServer).start()
     hcm_time_zone = pytz.timezone("Asia/Ho_Chi_Minh")
     temp_humid_server = aio.receive('bk-iot-temp-humid')
     timestamp_th = datetime.datetime.strptime(temp_humid_server[1], '%Y-%m-%dT%H:%M:%S%z')
@@ -245,12 +248,13 @@ def getDataFromServer():
         data = relay_server[3]
         data = data.replace("'", '"')
         data = json.loads(data)
-        relay = data['data']  
+        relay = data['data']
         if relay == '1':
             database.insertPump('ON', timestamp_p)
         else:
             database.insertPump('OFF', timestamp_p)
     else: pass
+
 
 getDataFromServer()
 if __name__ == '__main__':    
