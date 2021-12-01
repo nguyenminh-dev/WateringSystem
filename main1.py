@@ -168,11 +168,8 @@ def detailhand():
 @app.route('/detailauto')
 @flask_login.login_required
 def detailauto():
-    air = database.getLastAir()
-    soil = database.getLastSoil()
-    pump = database.getLastPump()
     user = flask_login.current_user   
-    return render_template('detail_auto.html', usrname=user.name, airs = air, soils = soil, pumps = pump)
+    return render_template('detail_auto.html', usrname=user.name)
 
 @app.route('/temp')
 def temp():

@@ -197,7 +197,7 @@
                         </div>
                     </div>
                     <div class="custom-control custom-switch custom-switch-lg">
-                        <input type="checkbox" class="custom-control-input" id="customSwitch8" onchange="controllerPump()" checked/>
+                        <input type="checkbox" class="custom-control-input" id="customSwitch8" name="customSwitch8" onchange="controllerPump()" />
                         <label class="custom-control-label" for="customSwitch8">
                             <h1 style="color:black;" id="relay">OFF</h1>
                         </label>
@@ -218,7 +218,7 @@
             temp.innerHTML = t + "\xB0 C";
             });
         });
-    }, 10000);
+    }, 2000);
 
     var humidity = document.getElementById("humid");
         setInterval(() => {
@@ -227,7 +227,7 @@
             humidity.innerHTML = t + " %";
             });
         });
-    }, 10000);
+    }, 2000);
 
     var soil = document.getElementById("soil");
         setInterval(() => {
@@ -236,17 +236,21 @@
             soil.innerHTML = t;
             });
         });
-    }, 10000);
+    }, 2000);
 
     var relay = document.getElementById("relay");
     setInterval(() => {
         fetch("{{ url_for('relay') }}").then((response) => {
+            let yes = document.getElementById("customSwitch8");
             response.text().then((t) => {
             if (relay.innerHTML != t){
                 relay.innerHTML = t;}
+                yes.checked = true;
+                if(t == 'OFF')
+                    yes.checked = false;
             });
         });
-    }, 10000);
+    }, 2000);
 
 
     client = new Paho.MQTT.Client("io.adafruit.com", 443, "nguyenngoc");
