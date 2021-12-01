@@ -57,13 +57,21 @@
                 </ul>
             </div>
             <div class="col-md-6">
-                <form method="POST" action="{{ url_for('autowatering') }}">
-                    <select name="comp_select" class="selectpicker form-control">
-                        {% for mode in modes %}
-                        <option value="{{ mode[0] }}" id="{{ mode[0] }}" name="{{ mode[0] }}">{{ mode[0] }}</option>
-                        {% endfor %}
-                    </select>
-                    <button type="submit" class="btn btn-default">Bật</button>
+                <form method="POST" action="{{ url_for('detailauto') }}">
+                    <label>Chế độ tưới</label>  
+                    <input type="text" name="mode" id="mode" class="form-control" value="{{mode}}"/>  
+                    <br/>
+                    <label>Độ ẩm đất</label>  
+                    <input type="text" name="soil" id="soil" class="form-control" value="{{soil}}"/>  
+                    <br/>
+                    <label>Nhiệt độ</label>  
+                    <input type="text" name="temp" id="temp" class="form-control" value="{{temp}}"/>  
+                    <br/>
+                    <label>Độ ẩm không khí</label>  
+                    <input type="text" name="humid" id="humid" class="form-control" value="{{humid}}"/>
+                    <br/>
+                    <h1 style="color:black;" id="relay">OFF</h1>
+                    <button type="submit" class="btn btn-default">Tắt</button>
                 </form>
             </div>
         </div>
@@ -77,7 +85,7 @@
             temp.innerHTML = t + "\xB0 C";
             });
         });
-    }, 2000);
+    }, 1000);
 
     var humidity = document.getElementById("humid");
         setInterval(() => {
@@ -86,7 +94,7 @@
             humidity.innerHTML = t + " %";
             });
         });
-    }, 2000);
+    }, 1000);
 
     var soil = document.getElementById("soil");
         setInterval(() => {
@@ -95,7 +103,21 @@
             soil.innerHTML = t;
             });
         });
-    }, 2000);
+    }, 1000);
+    var relay = document.getElementById("relay");
+    setInterval(() => {
+        fetch("{{ url_for('relay') }}").then((response) => {
+            let yes = document.getElementById("customSwitch8");
+            response.text().then((t) => {
+            if (relay.innerHTML != t){
+                relay.innerHTML = t;}
+            });
+        });
+    }, 1000);
+
+    setTimeout(function() {
+        location.reload();
+    }, 10000);
 </script>
 </body>
 </html>

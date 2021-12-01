@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang chủ</title>
+    <title>Quản lý chế độ tưới</title>
     <link rel="stylesheet" href="../static/css/styles.css">
     <link rel="stylesheet" href="../static/css/grid.css">
     <link rel="stylesheet" href="../static/css/manager.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
     <link rel="stylesheet" href="../static/font/fontawesome-free-5.15.4-web/css/all.css">
 </head>
 <body>
@@ -37,8 +40,8 @@
                     <tr>
                         <th class="proper-short">Chế độ tưới</th>
                         <th class="proper-short">Độ ẩm đất</th>
-                        <th class="proper-long">Độ ẩm không khí</th>
-                        <th class="proper-short">Nhiệt độ</th>
+                        <th class="proper-long">Nhiệt độ</th>
+                        <th class="proper-short">Độ ẩm không khí</th>
                         <th class="proper-short">Chế độ phun</th>
                         <th class="proper-long">Lượng nước tưới</th>
                         <th class="proper-short">Ngày tạo</th>
@@ -54,8 +57,7 @@
                         <td class="proper-short">{{mode[6]}}</td>
                         <td class="proper-short">{{mode[8]}}</td>
                         <td class="proper-short">
-                            <button type="button" class="btn-edit">Sửa</button>
-
+                            <a href="/update/{{mode[9]}}" class="btn-edit">Sửa</a>
                             <a href="/delete/{{mode[9]}}" class="btn-edit">Xóa</a>
                         </td>
                     </tr>
@@ -63,9 +65,89 @@
                 </table>
             </div>
             <div class="col l-2">
-                <button class="btn-add" type="button">Thêm mới</button>
+                <button class="btn-add" type="button" data-target="#myModal" role="button" class="btn btn-warning" data-toggle="modal">Thêm mới</button>
             </div>
         </div>
     </div>
+    <div id="myModal" class="modal fade">  
+        <div class="modal-dialog"> 
+            <div class="modal-content">  
+                <div class="modal-header">  
+                    <h4 class="modal-title">Tạo mới chế độ tưới</h4>  
+                </div>
+                <div class="modal-body">  
+                    <label>Chế độ tưới</label>  
+                    <input type="text" name="mode" id="mode" class="form-control" />  
+                    <br/>
+                    <label>Độ ẩm đất</label>  
+                    <input type="text" name="soil" id="soil" class="form-control" />  
+                    <br/>
+                    <label>Nhiệt độ</label>  
+                    <input type="text" name="temp" id="temp" class="form-control" />  
+                    <br/>
+                    <label>Độ ẩm không khí</label>  
+                    <input type="text" name="humid" id="humid" class="form-control" />  
+                    <br/>
+                    <label>Chế độ phun</label>  
+                    <input type="text" name="spraymode" id="spraymode" class="form-control" />  
+                    <br/> 
+                    <label>Lượng nước tưới</label>  
+                    <div class="slidecontainer">
+                        <p><span id="demo" style="color: blue;"></span> m3/giờ</p>
+                        <input type="range" min="1" max="100" value="50" class="slider" id="amountwater" name="amountwater">
+                    </div>  
+                    <br/>  
+                    <button type="button" name="create_button" id="create_button" class="btn btn-warning">Tạo</button>
+                    <button type="button" class="close" data-dismiss="modal">Hủy</button>  
+                </div>  
+            </div>  
+        </div>  
+    </div>
+
+    <script>
+        var slider = document.getElementById("amountwater");
+        var output = document.getElementById("demo");
+        output.innerHTML = slider.value;
+
+        slider.oninput = function() {
+            output.innerHTML = this.value;
+        }
+
+        $(document).ready(function(){  
+        $('#create_button').click(function(){  
+            var mode = $('#mode').val();  
+            var soil = $('#soil').val();  
+            var temp = $('#temp').val();
+            var humid = $('#humid').val();
+            var spraymode = $('#spraymode').val();
+            var amountwater = $('#amountwater').val();
+            if(mode == '')
+            {  
+                alert("Chế độ tưới không được bỏ trống");
+            }
+            else if(soil == '')
+            {  
+                alert("Độ ẩm đất không được bỏ trống");
+            }
+            else if(temp == '')
+            {  
+                alert("Nhiệt độ không được bỏ trống");
+            }
+            else if(humid == '')
+            {  
+                alert("Độ ẩm khống khí không được bỏ trống");
+            }  
+            else 
+            {  
+                $.ajax({  
+                    url:"/manager/create",  
+                    method:"POST",  
+                    data: {mode:mode, soil:soil, temp:temp, humid:humid, spraymode:spraymode, amountwater:amountwater},    
+                });
+                location.reload("{{ url_for('manager') }}");
+            }   
+        });    
+    });
+    </script>
 </body>
 </html>

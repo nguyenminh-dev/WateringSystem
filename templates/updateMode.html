@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cập nhật chế độ tưới</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/grid.css">
+    <link rel="stylesheet" href="../static/css/manager.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
+    <link rel="stylesheet" href="../static/font/fontawesome-free-5.15.4-web/css/all.css">
+</head>
+<body>
+    <div id="container" class="grid">
+        <div id="nav-bar" class="row no-gutter">
+            <div class="col l-3">
+                <a href="{{ url_for('adminhomepage') }}"><img src="../static/img/logo.png" alt="logo" width="90px" height="75px"></a>
+            </div>
+            <div class="col l-6">
+                <ul id="navigation">
+                    <li><a href="{{ url_for('adminhomepage') }}">Trang chủ</a></li>
+                    <li><a href="{{ url_for('area') }}">Khu vực</a></li>
+                    <li><a href="{{ url_for('manager') }}">Quản lý chế độ tưới</a></li>
+                </ul>
+            </div>
+            <div class="col l-3">
+                <a href=""><i class="icon-account fas fa-user-circle"><h2>{{ usrname }}</h2></i></a>
+                <a href="{{ url_for('logout') }}">
+                    <button type="button" class="btn-nav">Đăng xuất</button>
+                </a>
+            </div>
+        </div>
+        <div class="row no-gutter">
+            <h1>Cập nhật chế độ tưới</h1><br/>
+            <form action="/update/{{code}}" METHOD="POST">
+                <label>Chế độ tưới</label>  
+                <input type="text" name="mode" id="mode" class="form-control" value="{{mode}}"/>  
+                <br/>
+                <label>Độ ẩm đất</label>  
+                <input type="text" name="soil" id="soil" class="form-control" value="{{soil}}"/>  
+                <br/>
+                <label>Nhiệt độ</label>  
+                <input type="text" name="temp" id="temp" class="form-control" value="{{temp}}"/>  
+                <br/>
+                <label>Độ ẩm không khí</label>  
+                <input type="text" name="humid" id="humid" class="form-control" value="{{humid}}"/>  
+                <br/>
+                <input type="submit" value="Cập nhật" class="btn">
+            </form>
+        </div>
+</body>
+</html>
