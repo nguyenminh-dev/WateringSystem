@@ -81,6 +81,28 @@ def getModes():
         return rows
     else: return 0
 
+def getInfoUpdate(code):
+    con = connectDatabase(DATABASE)
+    cur = con.cursor()
+    cur.execute("SELECT Soil, Temp, Humid FROM Modes WHERE Code=?", [code])
+    rows = cur.fetchall()
+    con.commit()
+    con.close()
+    if rows:
+        return rows[0][0], rows[0][1], rows[0][2]
+    else: return None
+
+def getInfoByMode(mode):
+    con = connectDatabase(DATABASE)
+    cur = con.cursor()
+    cur.execute("SELECT * FROM Modes WHERE Mode=?", [mode])
+    rows = cur.fetchall()
+    con.commit()
+    con.close()
+    if rows:
+        return rows[0][0], rows[0][1], rows[0][2], rows[0][3]
+    else: return None
+
 def addModes(mode, soil, temp, humid, status, spraymode, amountwater, time, createtime, code):
     con = connectDatabase(DATABASE)
     cur = con.cursor()
@@ -89,10 +111,10 @@ def addModes(mode, soil, temp, humid, status, spraymode, amountwater, time, crea
     con.close()
     return True
 
-def updateModes(rowid, mode, soil, temp, humid, status, spraymode, amountwater, time, createtime, code):
+def updateModes(mode, soil, temp, humid, code):
     con = connectDatabase(DATABASE)
     cur = con.cursor()
-    cur.execute("UPDATE Modes SET Mode= ?, Soil= ?, Temp=?, Humid=?, Status=?, SprayMode=?, AmountWater=?, Time=?, CreateTime=?, Code=? WHERE rowid=?" , (mode, soil, temp, humid, status, spraymode, amountwater, time, createtime, code, rowid))
+    cur.execute("UPDATE Modes SET Mode= ?, Soil= ?, Temp=?, Humid=? WHERE Code=?" , (mode, soil, temp, humid, code))
     con.commit()
     con.close()
     return True
@@ -174,3 +196,15 @@ def getLastPump():
     if rows:
         return rows[0][0], rows[0][1]
     else: return 0, 0
+
+def getModeByCode(code):
+    con = connectDatabase(DATABASE)
+    cur = con.cursor()
+    cur.execute("SELECT Mode from Modes WHERE Code=?", [code])
+    rows = cur.fetchall()
+    con.commit()
+    con.close()
+    if rows:
+        return rows[0][0]
+    else:
+        return None

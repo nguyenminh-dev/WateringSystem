@@ -10,6 +10,7 @@ from Adafruit_IO import Client
 from flask_wtf import FlaskForm
 from wtforms import SubmitField
 from flask_bootstrap import Bootstrap
+import random
 
 ADAFRUIT_IO_USERNAME = ""
 ADAFRUIT_IO_KEY = ""
@@ -108,22 +109,6 @@ def adminhomepage():
 @flask_login.login_required
 def manager():
     error = None
-    if request.method == 'POST':
-        mode = request.form['username']
-        soil = request.form['soil']
-        temp = request.form['temp']
-        humid = request.form['humid']
-        status = request.form['status']
-        spraymode = request.form['spraymode']
-        amountwater = request.form['amountwater']
-        time = request.form['time']
-        createtime = request.form['createtime']
-        code = request.form['code']
-        if database.getIdbyName(mode) != None:
-            flash('Mode already exists. Please try another name!', category='error')
-        else:            
-            database.addModes(mode, soil, temp, humid, status, spraymode, amountwater, time, createtime)
-            flash('Create successful!', category='susscess')
     if request.method == 'PUT':
         rowid = request.form['rowid']
         mode = request.form['username']
@@ -146,6 +131,47 @@ def manager():
     user = flask_login.current_user   
     return render_template('manager.html', usrname=user.name, modes = modes)
 
+@app.route('/manager/create', methods=['POST'])
+@flask_login.login_required
+def createMode():
+    hcm_time_zone = pytz.timezone("Asia/Ho_Chi_Minh")
+    timestamp_th = datetime.datetime.now()
+    timestamp_th = timestamp_th.astimezone(hcm_time_zone)
+    if request.method == 'POST':
+        mode = request.form['mode']
+        soil = request.form['soil']
+        temp = request.form['temp']
+        humid = request.form['humid']
+        status = 0
+        spraymode = request.form['spraymode']
+        amountwater = request.form['amountwater']
+        time = 60
+        createtime = timestamp_th
+        code = randomCode()
+        if database.getIdbyName(mode) != None:
+            flash('Mode already exists. Please try another name!', category='error')
+        else:            
+            database.addModes(mode, soil, temp, humid, status, spraymode, amountwater, time, createtime, code)
+            flash('Create successful!', category='susscess')    
+    return redirect(url_for('manager'))
+
+@app.route('/update/<int:code>', methods=['POST', 'GET'])
+@flask_login.login_required
+def updateMode(code):
+    mode = database.getInfoUpdate(code)[0]
+    soil = database.getInfoUpdate(code)[1]
+    temp = database.getInfoUpdate(code)[2]
+    humid = database.getInfoUpdate(code)[3]
+    if request.method == 'POST':
+        mode = request.form['mode']
+        soil = request.form['soil']
+        temp = request.form['temp']
+        humid = request.form['humid']
+        database.updateModes(mode, soil, temp, humid, code)
+        return redirect(url_for('manager'))
+    else:
+        return render_template('updateMode.html', mode=mode, soil=soil, temp=temp, humid=humid, code = code)
+
 @app.route('/delete/<int:code>')
 @flask_login.login_required
 def deleteMode(code):
@@ -156,20 +182,26 @@ def deleteMode(code):
 @app.route('/detailhand', methods=['GET', 'POST'])
 @flask_login.login_required
 def detailhand():
-    air = database.getLastAir()
-    soil = database.getLastSoil()
-    if database.getLastPump()[0] == 'OFF':
-        tuoinuoc = 0
-    else:
-        tuoinuoc = 1
     user = flask_login.current_user   
-    return render_template('detail_hand.html', usrname=user.name, airs = air, soils = soil, pumps = tuoinuoc)
+    return render_template('detail_hand.html', usrname=user.name)
 
-@app.route('/detailauto')
+@app.route('/detailauto', methods=['GET', 'POST'])
 @flask_login.login_required
 def detailauto():
+    modes = database.getModes()
     user = flask_login.current_user   
-    return render_template('detail_auto.html', usrname=user.name)
+    return render_template('detail_auto.html', usrname=user.name, modes = modes)
+
+@app.route('/autowatering', methods=['GET', 'POST'])
+@flask_login.login_required
+def autowatering():
+    mode = request.form.get('comp_select')
+    soil = database.getInfoByMode(mode)[1]
+    temp = database.getInfoByMode(mode)[2]
+    humid = database.getInfoByMode(mode)[3]
+    autoWateringMode(temp,humid,soil)
+    user = flask_login.current_user   
+    return render_template('selectMode.html', usrname=user.name, soil=soil, mode = mode, temp = temp, humid = humid)
 
 @app.route('/temp')
 def temp():
@@ -195,23 +227,53 @@ def relay():
         yield str(database.getLastPump()[0])
     return Response(generate(), mimetype='text')
 
-def autoWatering(temp, humid, soil):
+def randomCode():
+    a = random.randint(1, 10000)
+    if database.getModeByCode(a) != None:
+        return randomCode()
+    return a
+
+def autoWateringMode(temp, humid, soil):
+    temp1 = database.getLastAir()[0]
+    humid1 = database.getLastAir()[1]
+    soil1 = database.getLastSoil()[0]
+    pump = database.getLastPump()[0]
+    hcm_time_zone = pytz.timezone("Asia/Ho_Chi_Minh")
+    temp_humid_server = aio.receive('bk-iot-temp-humid')
+    timestamp_th = datetime.datetime.strptime(temp_humid_server[1], '%Y-%m-%dT%H:%M:%S%z')
+    timestamp_th = timestamp_th.astimezone(hcm_time_zone)
+    if soil1 < soil:
+        if temp1 < temp and humid1 > humid and pump == 'OFF':
+            data = {"id":"11", "name":"RELAY", "data":"1", "unit":""}
+            database.insertPump('ON', timestamp_th)
+            connectBBC1.PublishData(data)
+    elif soil1 > 450:
+        if pump == 'ON':
+            data = {"id":"11", "name":"RELAY", "data":"0", "unit":""}
+            database.insertPump('OFF', timestamp_th)
+            connectBBC1.PublishData(data)
+    else:
+        data = {"id":"11", "name":"RELAY", "data":"0", "unit":""}
+        database.insertPump('OFF', timestamp_th)
+        connectBBC1.PublishData(data)
+
+def autoWatering():
     threading.Timer(2.0, autoWatering).start()
     temp1 = database.getLastAir()[0]
     humid1 = database.getLastAir()[1]
     soil1 = database.getLastSoil()[0]
     pump = database.getLastPump()[0]
-    if soil1 < soil:
-        if temp1 < temp and humid1 > humid and pump == 'OFF':
+    if soil1 < 100:
+        if temp1 < 27 and humid1 > 100 and pump == 'OFF':
             data = {"id":"11", "name":"RELAY", "data":"1", "unit":""}
             connectBBC1.PublishData(data)
     if soil1 > 450:
-        if temp1 < temp and humid1 > humid and pump == 'ON':
-            data = {"id":"11", "name":"RELAY", "data":"0", "unit":""}
+        if temp1 < 27 and humid1 > 100 and pump == 'ON':
+            data = {"id":"11", "name":"RELAY", "data":"0", "unit":""}           
             connectBBC1.PublishData(data)
 
 def getDataFromServer():
-    threading.Timer(2.0, getDataFromServer).start()
+    threading.Timer(3.0, getDataFromServer).start()
     hcm_time_zone = pytz.timezone("Asia/Ho_Chi_Minh")
     temp_humid_server = aio.receive('bk-iot-temp-humid')
     timestamp_th = datetime.datetime.strptime(temp_humid_server[1], '%Y-%m-%dT%H:%M:%S%z')
@@ -254,5 +316,6 @@ def getDataFromServer():
 
 
 getDataFromServer()
+# autoWatering()
 if __name__ == '__main__':    
     app.run(debug=True)
