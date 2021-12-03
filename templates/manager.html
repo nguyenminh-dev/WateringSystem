@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="../static/css/grid.css">
     <link rel="stylesheet" href="../static/css/manager.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
     <link rel="stylesheet" href="../static/font/fontawesome-free-5.15.4-web/css/all.css">
@@ -17,26 +16,39 @@
 <body>
     <div id="container" class="grid">
         <div id="nav-bar" class="row no-gutter">
-            <div class="col l-3">
-                <a href="{{ url_for('adminhomepage') }}"><img src="../static/img/logo.png" alt="logo" width="90px" height="75px"></a>
+            <div class="col l-3 m-6 c-6">
+                <a href="{{ url_for('index') }}"><img src="../static/img/logo.png" alt="logo" width="90px" height="75px"></a>
             </div>
-            <div class="col l-6">
+            <div class="col l-6 m-0 c-0">
                 <ul id="navigation">
-                    <li><a href="{{ url_for('adminhomepage') }}">Trang chủ</a></li>
+                    <li><a href="{{ url_for('index') }}">Trang chủ</a></li>
                     <li><a href="{{ url_for('area') }}">Khu vực</a></li>
-                    <li><a href="{{ url_for('manager') }}">Quản lý chế độ tưới</a></li>
+                    <li><a class="btn-selected" href="{{ url_for('manager') }}">Quản lý chế độ tưới</a></li>
                 </ul>
             </div>
-            <div class="col l-3">
-                <a href=""><i class="icon-account fas fa-user-circle"><h2>{{ usrname }}</h2></i></a>
+            <div class="col l-3 m-5 c-5">
+                <a href=""><i class="icon-account fas fa-user-circle"></i></a>
                 <a href="{{ url_for('logout') }}">
                     <button type="button" class="btn-nav">Đăng xuất</button>
                 </a>
             </div>
+            <div class="drop-down col l-0 m-1 c-1">
+                <div class="icon">
+                    <i class="fas fa-grip-lines fa-2x"></i>
+                </div>
+                <ul class="nav-hidden w-100">
+                    <li><a href="{{ url_for('index') }}">Trang chủ</a></li>
+                    <li><a href="{{ url_for('area') }}">Khu vực</a></li>
+                    <li><a href="{{ url_for('manager') }}">Quản lý chế độ tưới</a></li>
+                </ul>
+              </div>
         </div>
-        <div class="row no-gutter">
-            <div class="container-table col l-10">
-                <table>
+        <div class="mana-container pos-rela">
+            <div class="mana-btn">
+                <button class="btn-add js-button-add" type="button" onclick="showModal()">Thêm mới</button>
+            </div>
+            <div class="container-table ">
+                <table class="cen">
                     <tr>
                         <th class="proper-short">Chế độ tưới</th>
                         <th class="proper-short">Độ ẩm đất</th>
@@ -57,52 +69,102 @@
                         <td class="proper-short">{{mode[6]}}</td>
                         <td class="proper-short">{{mode[8]}}</td>
                         <td class="proper-short">
-                            <a href="/update/{{mode[9]}}" class="btn-edit">Sửa</a>
-                            <a href="/delete/{{mode[9]}}" class="btn-edit">Xóa</a>
+                            <a href="/update/{{mode[9]}}" class="btn-edit">
+                                <button>
+                                    Sửa
+                                </button>
+                            </a>
+                            <a href="/delete/{{mode[9]}}" class="btn-del">
+                                <button>
+                                    Xóa
+                                </button>
+                            </a>
                         </td>
                     </tr>
                     {% endfor %}
                 </table>
             </div>
-            <div class="col l-2">
-                <button class="btn-add" type="button" data-target="#myModal" role="button" class="btn btn-warning" data-toggle="modal">Thêm mới</button>
-            </div>
+            
         </div>
     </div>
-    <div id="myModal" class="modal fade">  
-        <div class="modal-dialog"> 
-            <div class="modal-content">  
-                <div class="modal-header">  
-                    <h4 class="modal-title">Tạo mới chế độ tưới</h4>  
+
+    <!-- Modal Add new mode -->
+    <div id="myModal" class="grid modal js-modal">
+        <div class="modal-container js-modal-container">
+            <header class="modal-header row">
+                <div class="heading pos-rela col l-10">
+                    <h1 class="w-100 cen">Thêm mới chế độ tưới</h1>
                 </div>
-                <div class="modal-body">  
-                    <label>Chế độ tưới</label>  
-                    <input type="text" name="mode" id="mode" class="form-control" />  
-                    <br/>
-                    <label>Độ ẩm đất</label>  
-                    <input type="text" name="soil" id="soil" class="form-control" />  
-                    <br/>
-                    <label>Nhiệt độ</label>  
-                    <input type="text" name="temp" id="temp" class="form-control" />  
-                    <br/>
-                    <label>Độ ẩm không khí</label>  
-                    <input type="text" name="humid" id="humid" class="form-control" />  
-                    <br/>
-                    <label>Chế độ phun</label>  
-                    <input type="text" name="spraymode" id="spraymode" class="form-control" />  
-                    <br/> 
-                    <label>Lượng nước tưới</label>  
+                <div class="col l-2">
+                    <i class="far fa-plus-square"></i>
+                </div>
+            </header>
+            <form class="modal-body row" action="" method="post">
+                <div class="mode pos-rela">
+                    <label for="mode" class="modal-label">
+                        Chế độ tưới
+                    </label>
+                    <input name="mode" id="mode" type="text" class="modal-input cen" required placeholder="Tên chế độ tưới">
+                </div>
+
+                <div class="row input-group w-100">
+                    <div class="col l-6">
+                        <label for="soil" class="modal-label">
+                            Độ ẩm đất
+                        </label>
+                        <input name="soil" id="soil" type="text" class="modal-input" placeholder="Độ ẩm đất">
+                    </div>
+                    <div class="col l-6">
+                        <label for="humid" class="modal-label right-label">
+                            Độ ẩm không khí
+                        </label>
+                        <input name="humid" id="humid" type="text" class="modal-input right-input" placeholder="Độ ẩm không khí">
+                    </div>
+                </div>
+                <div class="row input-group w-100">
+                    <div class="col l-6">
+                        <label for="humid" class="modal-label">
+                            Nhiệt độ
+                        </label>
+                        <input type="text" name="temp" id="temp" class="modal-input" placeholder="Nhiệt độ">
+                    </div>
+                    <div class="col l-6">
+                        <label for="spraymode" class="mode-label right-label">
+                            Chế độ phun
+                        </label>
+                        <input type="text" name="spraymode" id="spraymode" class="modal-input right-input" placeholder="Chế độ phun" />
+                    </div>
+                </div>
+                <div class="mode">
+                    <label for="luong-nuoc" class="modal-label ">
+                        Lượng nước tưới
+                    </label>
                     <div class="slidecontainer">
-                        <p><span id="demo" style="color: blue;"></span> m3/giờ</p>
+                        <div class="text-slide">
+                            <p><span id="demo" style="color: rgb(4, 61, 252); font-size: 18px; font-weight: bold;"></span> m3/giờ</p>
+                        </div>
                         <input type="range" min="1" max="100" value="50" class="slider" id="amountwater" name="amountwater">
-                    </div>  
-                    <br/>  
-                    <button type="button" name="create_button" id="create_button" class="btn btn-warning">Tạo</button>
-                    <button type="button" class="close" data-dismiss="modal">Hủy</button>  
-                </div>  
-            </div>  
-        </div>  
+                    </div>
+                </div>
+                <div class="row btn-group w-100">
+                    <div class="col l-6">
+                        <button type="button" class="js-modal-close" onclick="closeModal()">
+                            Hủy
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="col l-6">
+                        <button type="button" name="create_button" id="create_button">
+                            Lưu
+                            <i class="fas fa-save"></i>
+                        </button>
+                    </div>
+                </div>              
+            </form>
+            <div class="clear"></div>
+        </div>
     </div>
+    <!-- End Modal Add new mode -->
 
     <script>
         var slider = document.getElementById("amountwater");
@@ -148,6 +210,20 @@
             }   
         });    
     });
+
+
+
+        const modalAdd = document.querySelector('.js-modal')
+        const modalAddContainer = document.querySelector('.js-modal-container')
+        function showModal(){
+           modalAdd.classList.add('open')
+        }
+        function closeModal(){
+            modalAdd.classList.remove('open')
+        }
+        modalAddContainer.addEventListener('click', function(event){
+            event.stopPropagation('.js-modal-container')
+        })
     </script>
 </body>
 </html>

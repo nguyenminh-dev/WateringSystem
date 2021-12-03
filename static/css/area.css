@@ -1,84 +1,105 @@
-* {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, Helvetica, sans-serif;
-        color: white;
-    }
-    #container{
-        width: 100%;
-    }
-    #menu{
-        background-color: rgb(84,84,84);
-        width: 100%;
-        height: 120px;
-    }
-    #logo{
-        width: 8%;
-        float: left;
-        height: 120px;
-        position: relative;
-    }
-    #logo img {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        width: 100%;
-    }
-    #selection {
-        float: left;
-        height: 100%;
-        width: 60%;
-        display: table;
-    }
-    #id {
-        width: 20%;
-    }
-    #selection ul{
-        display: table-cell;
-        vertical-align: middle;
-    }   
-    #selection li{
-        display: inline-block;
-        color:  white;
-        line-height: 45px;
-        width: 20%;
-        text-align: center;
-    }
-    #selection li:hover {
-        background-color: rgb(128, 128, 128);
+
+#navigation a {
+    background-color: rgb(84,84,84);
+}
+.frame-area{
+    height: 200px;
+    position: relative;
+}
+.area{
+    width: 300px;
+    height: 150px;
+    background-image: url("../img/area_bg.png");
+    background-size: 100% 100%;
+    background-clip: content-box;
+    background-repeat: no-repeat;
+    color: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0 12px;
+    margin: 0 8px;
+}
+.area h1{
+   font-size: 23px;
+   line-height: 1.5;
+   padding-left: 8px;
+   padding-top: 8px;
+   margin-bottom: 8px;
+}
+.area a{
+    text-decoration: none;
+    color: #fff;
+    padding: 0 8px;
+}
+.area a:hover{
+    color: #79BEDB;
+}
+
+@media only screen and (max-width: 1023px){
+    .drop-down:hover{
         cursor: pointer;
     }
-    #logout {
-        float: right;
-    }
-    #general {
-        padding-top: 20px;
-        width: 100%;
-        height: 450px;
-        background-color: rgb(254, 254, 242);
+    .drop-down:hover .icon{
+        color: #fff;
     }
 
-
-    #plant-name {
-        width: 20%;
-        height: 120px;
-        background-image: url("../img/area_bg.png");
-        background-size:100% 100%;
-        background-repeat: no-repeat;
-        margin-left: 5%;
-        margin-top: 5px;
-        border-radius: 5px;
-        float: left;
+    .drop-down .nav-hidden{
+        right: 0;
+        list-style-type: none;
+        padding: 0;
+        position: absolute;
+        top: 120px;
+        background-color: rgba(0, 0, 0, 0.5);
+        height: 100%;
     }
-
-    #plant-name p {
-        margin-top: 2%;
-        margin-left: 6%;
-    }
-    a {
+    .drop-down li{
         text-decoration: none;
+        padding: 12px;
+        text-align: center;
+        width: 100%;
+        background-color: #d68857;
     }
-    #navigation a {
-        background-color: rgb(84,84,84);
+    .drop-down li a{
+        width: 100%;
+        text-decoration: none;
+        padding: 16px 32px;
+        display: block;
+        background-color: #d68857;
+        border: 3px solid #d68857;
+        color: #fff;
     }
+    .drop-down li a:hover{
+        color: #d68857;
+        background-color: #fff;
+        border: 3px solid #ac6133;
+    }
+}
+@media (min-width: 1024px) and (max-width: 1239px){
+    .area{
+        width: 280px;
+        height: 150px;
+    }
+}
+
+@media (min-width: 968px) and (max-width: 1024px){
+    .area{
+        width: 270px;
+        height: 150px;
+    }
+}
+
+@media (min-width: 740px) and (max-width: 968px){
+    .area{
+        width: 250px;
+        height: 150px;
+    }
+    
+}
+@media (max-width: 739px){
+    .area{
+        width: 250px;
+        height: 150px;
+    }
+}

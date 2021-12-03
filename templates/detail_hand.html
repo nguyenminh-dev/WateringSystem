@@ -7,12 +7,12 @@
     <title>Tưới thủ công</title>
     <link rel="stylesheet" href="../static/css/styles.css">
     <link rel="stylesheet" href="../static/css/grid.css">
-    <link rel="stylesheet" href="../static/css/form-login.css">
+    <!-- <link rel="stylesheet" href="../static/css/form-login.css"> -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="../static/font/fontawesome-free-5.15.4-web/css/all.css">
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <!-- <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" /> -->
     <link href="../static/css/styles.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" /> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../static/css/detail_hand.css">
@@ -113,93 +113,125 @@
 <body>
     <div id="container" class="grid">
         <div id="nav-bar" class="row no-gutter">
-            <div class="col l-3">
+            <div class="col l-3 m-6 c-6">
                 <a href="{{ url_for('index') }}"><img src="../static/img/logo.png" alt="logo" width="90px" height="75px"></a>
             </div>
-            <div class="col l-6">
+            <div class="col l-6 m-0 c-0">
                 <ul id="navigation">
                     <li><a href="{{ url_for('index') }}">Trang chủ</a></li>
                     <li><a href="{{ url_for('area') }}">Khu vực</a></li>
                     <li><a href="{{ url_for('manager') }}">Quản lý chế độ tưới</a></li>
                 </ul>
             </div>
-            <div class="col l-3">
+            <div class="col l-3 m-5 c-5">
                 <a href=""><i class="icon-account fas fa-user-circle"></i></a>
                 <a href="{{ url_for('logout') }}">
                     <button type="button" class="btn-nav">Đăng xuất</button>
                 </a>
             </div>
+            <div class="drop-down col l-0 m-1 c-1">
+                <div class="icon">
+                    <i class="fas fa-grip-lines fa-2x"></i>
+                </div>
+                <ul class="nav-hidden w-100">
+                    <li><a href="{{ url_for('index') }}">Trang chủ</a></li>
+                    <li><a href="{{ url_for('area') }}">Khu vực</a></li>
+                    <li><a href="{{ url_for('manager') }}">Quản lý chế độ tưới</a></li>
+                </ul>
+              </div>
         </div>
-        <div id="general">
-            <div id="left">
-                <div id="plant">
-                    <div id="plant-name">
-                        <p>Khu vực 1</p>
-                        <p>Cây cà chua</p>
+        <div id="general" class="detail-body row">
+            <div class="col l-4 m-12 c-12">
+                <div class="row">
+                    <div class="col l-7 m-4 c-4">
+                        <div class="plant-name pos-rela">
+                            <h3 class="cen w-100">Khu vực 1</h3>
+                        </div>
                     </div>
-                    <div id="plant-index">
-                        <ul>
-                            <li>
-                                <p>Độ ẩm đất</p>
-                                <p class="number" id="soil">0</p>
-                            </li>
-                            <li>
-                                <p>Độ ẩm không khí</p>
-                                <p class="number" id="humid">0 &#37;</p>
-                            </li><li>
-                                <p>Nhiệt độ</p>
-                                <p class="number" id="temp">0 &deg;C</p>
-                            </li>
-                        </ul>
+                    <div class="col l-5 m-8 c-8">
+                        <div class="plant-index">
+                            <ul>
+                                <li class="pos-rela">
+                                    <p>Độ ẩm đất</p>
+                                    <p class="number w-100 cen" id="soil">0</p>
+                                </li>
+                                <li class="pos-rela">
+                                    <p>Độ ẩm không khí</p>
+                                    <p class="number w-100 cen" id="humid">0 &#37;</p>
+                                </li>
+                                <li class="pos-rela">
+                                    <p>Nhiệt độ</p>
+                                    <p class="number w-100 cen" id="temp">0 &deg;C</p>
+                                </li>
+                            </ul>
+                        </div>   
                     </div>
                 </div>
-
-                <div id="watering-mode">
-                    <div id="mode-name">
-                        <p>Chọn chế độ tưới</p>
+                <div class="row">
+                    <div class="col l-7 m-4 c-4">
+                        <div class="mode-name pos-rela">
+                            <h3 class="w-100 cen">Chọn chế độ tưới</h3>
+                        </div>
                     </div>
-                    <div id="mode-choice">
-                        <ul>
+                    <div class="col l-5 m-8 c-8">
+                        <div class="mode-choice">
+                            <a href="{{ url_for('detailhand') }}">
+                                <button id="auto" class="btn-select btn-mode">
+                                    Thủ công
+                                </button>
+                            </a>
                             <a href="{{ url_for('detailauto') }}">
-                            <li>
-                                <p>Tự động</p>
-                            </li>
-                            </a>                        
-                            <li id="selected-mode">
-                                <p>Thủ công</p>
-                            </li>
-                        </ul>
+                                <button id="auto" class="btn-mode">
+                                    Tự động
+                                </button>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div id="option-table">
-                <div id="table-title"><p>Tưới thủ công</p></div>
-                    <div id="table-index">
-                        <p>Chế độ phun</p>
-                        <div id="watering-shape">
-                            <label class="labl">
-                                <input type="radio" name="radioname" value="one_value" checked="checked"/>
-                                <div style="color: green;">Phun hình nón</div>
-                            </label>
-                            <label class="labl">
-                                <input type="radio" name="radioname" value="another" />
-                                <div style="color: green;">Phun chùm</div>
-                            </label>
-                            <label class="labl">
-                                <input type="radio" name="radioname" value="another" />
-                                <div style="color: green;">Phun sương</div>
-                            </label>
-                        </div>
-                        <p>Lượng nước tưới: <span id="demo" style="color: blue;"></span> m3/giờ</p>
-                        <div class="slidecontainer">
-                            <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-                        </div>
+            <div class="col l-8 m-12 c-12 option-table">
+                <header class="table-header">
+                    <div class="heading">
+                        <h1 class="w-100 cen">Tưới thủ công</h1>
                     </div>
-                    <div class="custom-control custom-switch custom-switch-lg">
-                        <input type="checkbox" class="custom-control-input" id="customSwitch8" name="customSwitch8" onchange="controllerPump()" checked/>
-                        <label class="custom-control-label" for="customSwitch8">
-                            <h1 style="color:black;" id="relay">OFF</h1>
+                </header>
+                <div class="detail-hand">
+                    <div class="table-title pos-rela w-100">
+                        <label for="che-do-phun" class="table-label cen">
+                            Chế độ phun
+                        </label>
+                    </div>
+                    <div class="watering-shape">
+                        <label class="labl">
+                            <input type="radio" name="radioname" value="one_value" checked="checked"/>
+                            <div >Phun hình nón</div>
+                        </label>
+                        <label class="labl">
+                            <input type="radio" name="radioname" value="another" />
+                            <div>Phun chùm</div>
+                        </label>
+                        <label class="labl">
+                            <input type="radio" name="radioname" value="another" />
+                            <div>Phun sương</div>
+                        </label>
+                    </div>
+                    <div class="table-title pos-rela w-100">
+                        <label for="che-do-phun" class="table-label cen">
+                            Lượng nước tưới
+                        </label>
+                    </div>                        
+                    <div class="slidecontainer pos-rela">
+                        <div class="text-slide">
+                            <p><span id="demo" style="color: rgb(4, 61, 252); font-size: 23px; font-weight: bold;"></span> m3/giờ</p>
+                        </div>
+                        <input type="range" min="1" max="100" value="50" class="water-slider cen" id="myRange" name="myRange">
+                    </div>
+                    <div class="table-toggle">
+                        <label class="switch" for="customSwitch8">
+                            <input type="checkbox" id="customSwitch8" name="customSwitch8" onchange="controllerPump()">
+                            <span class="slider round" ></span>
+                            <h1 style="color:black;" id="relay"></h1>
                         </label>
                     </div>
                 </div>
@@ -245,9 +277,9 @@
             response.text().then((t) => {
             if (relay.innerHTML != t){
                 relay.innerHTML = t;}
-                yes.checked = true;
-                if(t == 'OFF')
-                    yes.checked = false;
+            yes.checked = true;
+            if(t == 'OFF')
+                yes.checked = false;
             });
         });
     }, 2000);
@@ -256,8 +288,8 @@
     client = new Paho.MQTT.Client("io.adafruit.com", 443, "nguyenngoc");
     client.onConnectionLost = onConnectionLost;
     var options = {
-        // userName: "nguyenngoc",
-        // password: "aio_pxwm06skCqgXBTCHqSB7PwAVf9lP",
+        userName: "nguyenngoc",
+        password: "aio_pxwm06skCqgXBTCHqSB7PwAVf9lP",
         userName: "",
         password: "",
         onSuccess:onConnect,

@@ -14,8 +14,8 @@ import random
 
 ADAFRUIT_IO_USERNAME = ""
 ADAFRUIT_IO_KEY = ""
-# ADAFRUIT_IO_USERNAME = "nguyenngoc"
-# ADAFRUIT_IO_KEY = "aio_pxwm06skCqgXBTCHqSB7PwAVf9lP"
+ADAFRUIT_IO_USERNAME = "nguyenngoc"
+ADAFRUIT_IO_KEY = "aio_pxwm06skCqgXBTCHqSB7PwAVf9lP"
 aio=Client(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
 app = Flask(__name__)
 app.secret_key = 'hcmutk18'
@@ -162,6 +162,7 @@ def updateMode(code):
     soil = database.getInfoUpdate(code)[1]
     temp = database.getInfoUpdate(code)[2]
     humid = database.getInfoUpdate(code)[3]
+    
     if request.method == 'POST':
         mode = request.form['mode']
         soil = request.form['soil']

@@ -17,6 +17,14 @@ html{
     content: "";
     clear: both;
 }
+.pos-rela{
+    position: relative;
+}
+.cen{
+    position: absolute;
+    left:50%;
+    transform: translateX(-50%);
+}
 /*Header Nav*/   
 #nav-bar{
     background-color: #545454;
@@ -26,6 +34,7 @@ html{
 }
 #navigation{
     margin-top: 20px;
+    display: inline-block;
 }
 #navigation li{
     list-style-type: none;
@@ -47,12 +56,21 @@ html{
     color: #0cdd7c;
     border: 3px solid #0cdd7c;
 }
+#navigation li .btn-selected{
+    background-color: #fff;
+    color: #0cdd7c;
+    border: 3px solid #0cdd7c;
+}
 #nav-bar .icon-account,
 #nav-bar .btn-nav{
     float: right;
     margin-top: 20px;
-    margin-right: 32px;
+    margin-right: 28px;
     background-color: #545454;
+}
+
+.drop-down .nav-hidden{
+    display: none;
 }
 
  /*Homepage đã đăng nhập*/
@@ -67,20 +85,22 @@ html{
 
 
 /*SlideShow*/
-
-#slideshow {
+/* #slide-bar{
+    padding: 0 54px;
+} */
+.slideshow {
     overflow: hidden;
-    height: 640px;
-    width: 100%;
+    height: 90vh;
+    width: 100vw;
     margin: 0 auto;
 }
 .slide-wrapper {
-    width: 6180px;
+    width: 400vw;
     animation: slide 14s ease infinite;
 }
-.slide {
+.slide-frame {
     float: left;
-    
+    width: 100vw ;
 }
 .content-header-li {
     background-color: black;
@@ -88,10 +108,86 @@ html{
 
 @keyframes slide {
     20% {margin-left: 0px;}
-    30% {margin-left: -1545px;}
-    50% {margin-left: -1545px;}
-    60% {margin-left: -3090px;}
-    80% {margin-left: -3090px;}
+    30% {margin-left: -100vw;}
+    50% {margin-left: -100vw;}
+    60% {margin-left: -200vw;}
+    80% {margin-left: -200vw;}
 }
- 
+
+
+@media only screen and (max-width: 1023px){
+    #nav-bar > .form-nav > ul{
+        display: inline-block;
+    }
+
+    .drop-down .nav-hidden{
+        display: none;
+    }
+    .drop-down .icon{
+        display: block;
+        position: relative;
+        color: rgb(255, 255, 255);
+        padding: 4px;
+        margin-top: 20px;
+        text-align: center;
+    }
+    .drop-down:hover .nav-hidden{
+        display: block;
+        animation: modal-act ease 1.5s;
+    }
+    @keyframes modal-act{
+        from{
+            opacity: 0;
+            transform: translateY(-150px);
+        }
+        to{
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .drop-down:hover{
+        cursor: pointer;
+    }
+    .drop-down:hover .icon{
+        color: #0cdd7c;
+    }
+    
+    .drop-down .nav-hidden{
+        right: 0;
+        list-style-type: none;
+        padding: 0;
+        position: absolute;
+        top: 78px;
+        background-color: rgba(0, 0, 0, 0.5);
+        height: 100%;
+    }
+    .drop-down li{
+        text-decoration: none;
+        padding: 12px;
+        text-align: center;
+        width: 100%;
+        background-color: #0cdd7c;
+    }
+    .drop-down li a{
+        width: 100%;
+        text-decoration: none;
+        padding: 10px 32px;
+        display: block;
+        background-color: #0cdd7c;
+        border: 3px solid #0cdd7c;
+        color: #fff;
+        font-size: 20px;
+        line-height: 1.5;
+    }
+    .drop-down li a:hover{
+        color: #545454;
+        background-color: #fff;
+        border: 3px solid #0cdd7c;
+    }
+}
+@media only screen and (max-width: 1200px){
+    #navigation li{
+        padding: 12px 0 ;
+    }
+}
 
