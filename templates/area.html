@@ -14,25 +14,35 @@
 <body>
     <div id="container" class="grid">
         <div id="nav-bar" class="row no-gutter">
-            <div class="col l-3">
+            <div class="col l-3 m-6 c-6">
                 <a href="{{ url_for('index') }}"><img src="../static/img/logo.png" alt="logo" width="90px" height="75px"></a>
             </div>
-            <div class="col l-6">
+            <div class="col l-6 m-0 c-0">
                 <ul id="navigation">
                     <li><a href="{{ url_for('index') }}">Trang chủ</a></li>
-                    <li><a href="{{ url_for('area') }}">Khu vực</a></li>
+                    <li><a class="btn-selected" href="{{ url_for('area') }}">Khu vực</a></li>
                     <li><a href="{{ url_for('manager') }}">Quản lý chế độ tưới</a></li>
                 </ul>
             </div>
-            <div class="col l-3">
+            <div class="col l-3 m-5 c-5">
                 <a href=""><i class="icon-account fas fa-user-circle"></i></a>
                 <a href="{{ url_for('logout') }}">
                     <button type="button" class="btn-nav">Đăng xuất</button>
                 </a>
             </div>
+            <div class="drop-down col l-0 m-1 c-1">
+                <div class="icon">
+                    <i class="fas fa-grip-lines fa-2x"></i>
+                </div>
+                <ul class="nav-hidden w-100">
+                    <li><a href="{{ url_for('index') }}">Trang chủ</a></li>
+                    <li><a href="{{ url_for('area') }}">Khu vực</a></li>
+                    <li><a href="{{ url_for('manager') }}">Quản lý chế độ tưới</a></li>
+                </ul>
+              </div>
         </div>
-        <div class="row no-gutter">
-            <div class="col l-3">
+        <div class="row ">
+            <!-- <div class="col l-3">
             </div>
             <div class="col l-6">
                 <ul id="navigation" class="areas">
@@ -42,7 +52,36 @@
                 </ul>
             </div>
             <div class="col l-3">
+            </div> -->
+            <div class="frame-area col l-3 m-4 c-6">
+                <div class="area">
+                    <h1>Khu vực 1</h1>
+                    <a href="{{ url_for('detailhand') }}">Xem thông tin</a>
+                </div>
+                
             </div>
+            <div class="frame-area col l-3 m-4 c-6">
+                <div class="area">
+                    <h1>Khu vực 2</h1>
+                    <a href="{{ url_for('detailhand') }}">Xem thông tin</a>
+                </div>
+                
+            </div>
+            <div class="frame-area col l-3 m-4 c-6">
+                <div class="area">
+                    <h1>Khu vực 3</h1>
+                    <a href="{{ url_for('detailhand') }}">Xem thông tin</a>
+                </div>
+                
+            </div>
+            <div class="frame-area col l-3 m-4 c-6">
+                <div class="area">
+                    <h1>Khu vực 4</h1>
+                    <a href="{{ url_for('detailhand') }}">Xem thông tin</a>
+                </div>
+                
+            </div>
+            
         </div>
     </div>
 </body>

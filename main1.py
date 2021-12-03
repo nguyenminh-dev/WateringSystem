@@ -162,6 +162,7 @@ def updateMode(code):
     soil = database.getInfoUpdate(code)[1]
     temp = database.getInfoUpdate(code)[2]
     humid = database.getInfoUpdate(code)[3]
+    
     if request.method == 'POST':
         mode = request.form['mode']
         soil = request.form['soil']

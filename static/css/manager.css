@@ -1,29 +1,34 @@
-.container-table{
-    margin-top: 48px;
+
+.mana-container{
+    padding: 32px;
 }
 table, tr, td, th{
     border: 2px solid #ccc;
     border-collapse: collapse;
+    text-align: center;
 }
 table{
-    float: right;
-    width: 90%;
+    width: 95vw;
 
 }
 th, td{
     padding: 12px 4px;
     text-align: center;
 }
-.proper-long{
+table .proper-long{
     width: 155px;
 }
-.proper-short{
+table .proper-short{
     width: 135px;
 }
+.mana-container .mana-btn{
+    text-align: left;
+    height: 100px;
+    padding: 12px 0;
+}
 .btn-add{
-    padding: 8px;
+    padding: 12px;
     margin-left: 16px;
-    margin-top: 52px;
     background-color: #0cdd7c;
     color: #fff;
     border: 3px solid #0cdd7c;
@@ -34,19 +39,282 @@ th, td{
     cursor: pointer;
 }
 
-td button{
+table td a{
     border: none;
-    background-color: #fff;
     color: rgb(83, 118, 216);
-    text-decoration: underline;
     padding: 5px;
+    text-decoration: none;
 }
 
-td button:hover{
+table td a:hover{
     cursor: pointer;
     opacity: 0.8;
 }
 
-.btn-edit{
-    border-right: 2px solid rgb(83, 118, 216);
+table td a button{
+    border: 2px solid rgb(83, 118, 216);
+    padding: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+
+/* Add new mode Modal */
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.open{
+    display: flex;
+}
+.modal-container{
+    background: #fff;
+    width: 650px;
+    max-width: calc(100% - 32px);
+    min-height: 300px;
+    position: relative;
+    animation: modal-act ease .5s;
+}
+
+.modal-header {
+    font-size: 30px;
+    background-color:  #02af3ce5;
+    padding: 32px;
+    color: #fff;
+    letter-spacing: 3px;
+    margin: 0;
+    height: 150px;
+}
+
+.modal-header h1{
+    text-align: center;
+    font-size: 32px;
+    padding: 32px;
+}
+
+.modal-header i{
+    font-size: 32px;
+    padding: 36px 32px 36px 12px;
+}
+
+.modal-body{
+    margin: 0 ;
+    font-size: 16px;
+    padding: 20px 64px;
+    display: block;
+}
+.modal-body .mode{
+    height: 85px;
+    padding: 0 24px;
+}
+.modal-body .input-group{
+    padding: 0 12px;
+    margin: 0;
+}
+.modal-body .modal-label {
+    display: block;
+    padding: 12px 0 ;
+    font-weight: bold;
+}
+
+.modal-body .modal-input{
+    padding: 8px;
+    border: 2px solid #ccc;
+    margin-bottom: 8px;
+    width: 475px;
+    
+}
+.modal-body .input-group .modal-input{
+    width: 200px;
+}
+
+.modal-body .input-group .mode-label{
+    display: inline-block;
+    padding: 12px;
+    padding-left: 0;
+    font-weight: bold;
+}
+.modal-body .input-group .right-input{
+    float: right;
+}
+.modal-body .input-group .right-label{
+    padding-left: 24px;
+}
+
+.modal-body .modal-input:focus,
+.modal-body .modal-input:hover{
+    border: 2px solid #ff6720;
+    outline: #ff6720;
+}
+
+.modal-body .slider{
+    width: 475px;
+    margin-top: 10px;
+    height: 25px;
+    background: #ccc;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    -webkit-appearance: none;
+}
+.modal-body .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #1177ec;
+    cursor: pointer;
+ }
+  
+.modal-body .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #04AA6D;
+    cursor: pointer;
+}
+.modal-body .slidecontainer .text-slide{
+    text-align: center;
+    font-size: 18px;
+}
+.modal-body .btn-group{
+    padding: 32px;
+    text-align: center;
+    margin-top: 12px;
+}
+.modal-body .btn-group button{
+    padding: 8px 16px ;
+    margin: 10px 5px;
+    background-color: #FF6720;
+    border: 2px solid #FF6720;
+    color: #fff;
+    text-transform: uppercase;
+    line-height: 1.5;
+}
+
+.modal-body .btn-group i{
+    font-size: 20px;
+    padding: 0 12px;
+}
+
+.modal-body .btn-group button:hover{
+     background-color: #fff;
+     color: #FF6720;
+     cursor: pointer;
+ }
+
+ @keyframes modal-act{
+     from{
+         opacity: 0;
+        transform: translateY(-150px);
+     }
+     to{
+         opacity: 1;
+        transform: translateY(0);
+     }
+ }
+
+ /*End Modal Add*/
+
+/*Update Mode*/
+.update-container .update-mode{
+    border: 5px solid #c4c2c0;
+    width: 50vw;
+    height: 640px;
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 16px;
+}
+.update-container .update-header{
+    width: 100%;
+    height: 120px;
+    background-color:  #04AA6D;
+    border-radius: 5px;
+    margin: 0;
+}
+.update-container .update-header h1{
+    font-size: 32px;
+    color:  #fff;
+    padding: 40px 0;
+    text-align: center;
+}
+.update-container .con-form{
+    height: 100%;
+}
+.update-container .update-mode form{
+    width: 70%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.update-mode .update-table{
+    height: 90px;
+    width: 500px;
+    display: block;
+}
+
+.update-table .update-label{
+    display: block;
+    padding: 12px 0 ;
+    font-weight: bold;
+}
+.update-table .update-input{
+    padding: 8px;
+    border: 2px solid #ccc;
+    margin-bottom: 8px;
+    width: 100%;
+}
+.update-mode .btn-group{
+    text-align: center;
+    margin-top: 16px;
+}
+.btn-group .btn-update{
+    border: 2px solid #FF6720;
+    background-color:  #FF6720;
+    padding: 8px 12px;
+    color: #fff;
+    width: 120px;
+    height: 50px;
+    color: #fff;
+    line-height: 1.5;
+    font-size: 18px;
+}
+.btn-group .btn-update:hover{
+    background-color: #fff;
+    color: #FF6720;
+    cursor: pointer;
+}
+/*End Update Mode*/
+
+@media (min-width:1024px) and (max-width:1239px){
+    .update-container .update-mode form{
+        width: 80%;
+    }
+    .update-container .update-mode{
+        width: 70vw;
+    }
+}
+@media (min-width:768px) and (max-width:1023px){
+    .update-container .update-mode form{
+        width: 80%;
+    }
+    .update-container .update-mode{
+        width: 80vw;
+    }
+}
+@media only screen and (max-width:767px){
+    .update-container .update-mode form{
+        width: 80%;
+    }
+    .update-container .update-mode{
+        width: 90vw;
+    }
 }

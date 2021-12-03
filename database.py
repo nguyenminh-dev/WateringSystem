@@ -84,12 +84,12 @@ def getModes():
 def getInfoUpdate(code):
     con = connectDatabase(DATABASE)
     cur = con.cursor()
-    cur.execute("SELECT Soil, Temp, Humid FROM Modes WHERE Code=?", [code])
+    cur.execute("SELECT Mode, Soil, Temp, Humid FROM Modes WHERE Code=?", [code])
     rows = cur.fetchall()
     con.commit()
     con.close()
     if rows:
-        return rows[0][0], rows[0][1], rows[0][2]
+        return rows[0][0], rows[0][1], rows[0][2], rows[0][3]
     else: return None
 
 def getInfoByMode(mode):

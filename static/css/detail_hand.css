@@ -1,257 +1,355 @@
-* {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, Helvetica, sans-serif;
-        color: white;
-    }
-    #container{
-        width: 100%;
-    }
-    #menu{
-        background-color: rgb(84,84,84);
-        width: 100%;
-        height: 120px;
-    }
-    #logo{
-        width: 8%;
-        float: left;
-        height: 120px;
-        position: relative;
-    }
-    #logo img {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        width: 100%;
-    }
-    #selection {
-        float: left;
-        height: 100%;
-        width: 60%;
-        display: table;
-    }
-    #selection ul{
-        display: table-cell;
-        vertical-align: middle;
-    }   
-    #selection li{
-        display: inline-block;
-        color:  white;
-        line-height: 45px;
-        width: 20%;
-        text-align: center;
-    }
-    #selection li:hover {
-        background-color: rgb(128, 128, 128);
-        cursor: pointer;
-    }
-    #logout {
-        float: right;
-    }
-    #general {
-        height: 450px;
-        background-color: rgb(254, 254, 242);
-    }
-    #left {
-        float: left;
-        width: 35%;
+/*Chế độ tưới thủ công*/
+.detail-body {
+    background-color: rgb(254, 254, 242);
+    margin: 0;
+    margin-top: 16px;
+    margin-right: 12px;
+    margin-left: 12px ;
+}
 
-    }
-    #plant {
-        width: 100%;
-        height: 280px;
-    }
-    #plant-name, #mode-name {
-        width: 40%;
-        height: 80px;
-        background-image: url("../img/area_bg.png");
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        margin-left: 5%;
-        margin-top: 5px;
-        border-radius: 5px;
-        float: left;
-    }
-    #plant p {
-        margin-top: 10px;
-        margin-left: 5%;
-    }
-    #plant-index, #mode-choice {
-        width: 40%;
-        height: 80px;
-        float: left;
-        margin-left: 5%;
-    }
-    #plant-index li, #mode-choice li {
-        width: 100%;
-        height: 80px;
-        background-color: rgb(51, 142, 151);
-        margin-top: 5px;
-        border-radius: 5px;
-        list-style: none;
-    }
-    #plant-index p, #mode-choice p {
-        text-align: center;
-        padding-top: 7px;
-    }
-    .number {
-        font-size: 190%;
-    }
-    #mode-name, #mode-choice li {
-        text-align: center;
-        display: table;
-    }
-    #mode-name p, #mode-choice p {
-        display: table-cell;
-        vertical-align: middle;
-    }
-    #watering-mode {
-        width: 100%;
-        height: 280px;
-    }
-
-    #selected-mode {
-        border-color: yellow;
-        border-style: solid;
-    }
-
-    #option-table {
-        float: left;
-        width: 60%;
-        border-color: rgb(46, 240, 227);
-        border-style: solid;
-        min-height: 400px;
-        margin-top: 5px;
+.plant-name, .mode-name {
+    width: 250px;
+    height: 120px;
+    background-image: url("../img/area_bg.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    margin-left: 12px;
+}
+.plant-name h3{
+    font-size: 24px;
+}
+.mode-name h3,
+.plant-name h3{
+    padding: 8px;
+    color: #fff;
+    letter-spacing: 1px;
+    font-size: 18px;
+    line-height: 1.5;
+    font-size: 20px;
+}
 
 
-    }
-    #table-title {
-        width: 100%;
-        height: 60px;
-        background-color: rgb(81, 214, 102);
-        display: table;
-        text-align: center;
-    }
-    #table-title p {
-        display: table-cell;
-        vertical-align: middle;
-    }
-    #table-index {
-        width: 100%;
-    }
-    #table-index p {
-        text-align: center;
-        margin-top: 30px;
-        color: blue;
-    }
-
-#watering-shape {
+.plant-index li, .mode-choice li {
+    width: 170px;
+    height: 120px;
+    background-color:  #0099CC;
+    border-radius: 5px;
+    list-style-type: none;
+    margin-bottom: 8px;
+    box-shadow: 5px 5px #8e9397;
+}
+.plant-index p, .mode-choice p {
     text-align: center;
-    margin-top: 20px;
+    color: #fff;
+    letter-spacing: 1px;
+    font-size: 18px;
+    line-height: 1.5;
+    padding: 8px 0;
 }
-.labl {
-    display: inline-block;
-    
+.plant-index .number {
+    font-size: 32px;
+}
 
-    border-radius: 20px;
+.mode-choice .btn-mode{
+    width: 170px;
+    height: 120px;
+    background-color:  #0099CC;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    color: #fff;
+    font-size: 28px;
+    border: 5px solid #0099CC;
+    box-shadow: 5px 5px #8e9397;
+}
+.mode-choice .btn-mode:hover{
+    cursor: pointer;
+    background-color: #fff;
+    color:#0099CC ;
+}
+
+.btn-select.btn-mode{
+    background-color: #fff;
+    color:#0099CC ;
+}
+
+.option-table {
+    border: 5px solid #005502;
+    height: 630px;
+    padding: 16px;
+    width: 100%;
+    border-radius: 10px;
+}
+.table-header {
+    background-color: #99CC99;
+    padding: 24px;
+    color: #993300;
+    letter-spacing: 3px;
+    margin: 0;
+    height: 120px;
+    border-radius: 5px;
+}
+
+.table-header .heading{
+    position: relative;
+}
+.table-header h1{
     text-align: center;
+    font-size: 40px;
+    padding: 16px;
 }
-.lab1 div {
-    color: green;
 
+.detail-hand .table-title{
+    height: 70px;
+    margin-top: 16px;
 }
-.labl > input{ /* HIDE RADIO */
+
+.detail-hand .table-title .table-label{
+    display: block;
+    padding: 16px 0 ;
+    font-weight: bold;
+    font-size: 24px;
+}
+.option-table .detail-hand{
+    height: 640px;
+}
+.detail-hand .watering-shape {
+    text-align: center;
+    margin-bottom: 16px;
+}
+.detail-hand .watering-shape .labl{
+    margin: 0 8px;
+}
+
+.watering-shape > .labl > input{ /* HIDE RADIO */
     visibility: hidden; /* Makes input not-clickable */
     position: absolute; /* Remove input from document flow */
 }
-.labl > input + div{ /* DIV STYLES */
+.watering-shape > .labl > input + div{ /* DIV STYLES */
     cursor:pointer;
-    border:2px solid transparent;border-radius: 20px;
-    height: 40px;
+    border: 3px solid #5BC236;
+    border-radius: 20px;
+    height: 50px;
     display: table-cell;
     vertical-align: middle;
-    width: 50%;
+    width: 150px;
+    font-size: 18px;
+    
 }
-.labl > input:checked + div{ /* (RADIO CHECKED) DIV STYLES */
+.watering-shape > .labl > input:checked + div{ /* (RADIO CHECKED) DIV STYLES */
     background-color: yellow;
-    border: 1px solid #ff6600;
+    border: 3px solid #ff6600;
 }
 
-
-.slidecontainer {
-    display: flex;
-    justify-content: center;
+/*Thanh trượt*/
+.detail-hand .slidecontainer{
+    display: block;
+    height: 100px;
+}
+.detail-hand .slidecontainer .water-slider{
+    width: 600px;
+    margin-top: 24px;
+    height: 25px;
+    background: #ccc;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+    -webkit-appearance: none;
+}
+.detail-hand .slidecontainer .water-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #1177ec;
+    cursor: pointer;
+ }
+  
+.detail-hand .slidecontainer .water-slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #04AA6D;
+    cursor: pointer;
+}
+.detail-hand .slidecontainer .text-slide{
+    text-align: center;
 }
 
-.slidecontainer input {
-    position: static;
-    width: 80%;
-    display: flex;
-    justify-content: center;
+.detail-hand .slidecontainer .text-slide p{
+    font-size: 16px;
 }
 
- .switch-button {
-        display: flex;
-    margin-top: 20px;
-    justify-content: center;
-}
-
-.switch {
+/*Toggle*/
+.detail-hand .switch {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    width: 80px;
+    height: 40px;
 }
-
-.switch input { 
+  
+.detail-hand .switch input { 
     opacity: 0;
     width: 0;
     height: 0;
 }
-
-.slider {
+  
+ .detail-hand .switch .slider {
     position: absolute;
     cursor: pointer;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgb(255, 0, 0);
-    -webkit-transition: .4s;
-    transition: .4s;
+    background-color: rgb(37, 37, 37);
+    -webkit-transition: .5s;
+    transition: .5s;
 }
-.slider:before {
+  
+.detail-hand .switch .slider:before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
+    height: 32px;
+    width: 32px;
     left: 4px;
     bottom: 4px;
-    background-color: rgb(0, 0, 0);
-    -webkit-transition: .4s;
-    transition: .4s;
+    background-color: white;
+    -webkit-transition: .5s;
+    transition: .5s;
+  }
+  
+.detail-hand .switch input:checked + .slider {
+    background-color: #f10d0d;
 }
-
-input:checked + .slider {
-    background-color: #01f854;
+  
+.detail-hand .switch input:focus + .slider {
+    box-shadow: 0 0 1px #f10d0d;
 }
-
-input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
+  
+.detail-hand .switch input:checked + .slider:before {
+    -webkit-transform: translateX(40px);
+    -ms-transform: translateX(40px);
+    transform: translateX(40px);
 }
-
-input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
+  
+  /* Rounded sliders */
+.detail-hand .switch .slider.round {
     border-radius: 34px;
 }
-
-.slider.round:before {
+  
+.detail-hand .switch .slider.round:before {
     border-radius: 50%;
+}
+
+.detail-hand .table-toggle {
+    text-align: center;
+    margin-top: 16px;
+}
+
+@media (min-width: 1240px) and (max-width: 1367px){
+    .plant-name, .mode-name {
+        width: 230px;
+        height: 120px;
+        margin: 0;
+    }
+    .plant-index li,
+    .mode-choice .btn-mode{
+        width: 150px;
+        height: 120px;
+        margin-right: 8px;
+    }
+}
+@media (min-width: 1024px) and (max-width: 1239px){
+    .plant-name, .mode-name {
+        width: 190px;
+        height: 100px;
+        margin: 0;
+    }
+    .plant-index li,
+    .mode-choice .btn-mode{
+        width: 120px;
+        height: 100px;
+        margin-right: 8px;
+    }
+    .plant-index p, .mode-choice p {
+        font-size: 18px;
+        padding: 4px 0;
+    }
+    .plant-index .number {
+        font-size: 24px;
+    }
+}
+@media (min-width: 768px) and (max-width: 1023px){
+    .plant-index li, .mode-choice li{
+        display: inline-block;
+    }
+    .plant-name, .mode-name {
+        width: 200px;
+        height: 100px;
+        margin-bottom: 12px;
+    }
+    .mode-name h3,
+    .plant-name h3{
+        font-size: 18px;
+    }
+    .mode-choice,
+    .plant-index ul{
+        display: flex;
+        justify-content: center;
+    }
+    .plant-index li,
+    .mode-choice .btn-mode{
+        width: 150px;
+        height: 100px;
+        margin-right: 10px;
+        font-size: 23px;
+    }
+    .plant-index p, .mode-choice p {
+        font-size: 18px;
+        padding: 4px 0;
+    }
+    .plant-index .number {
+        font-size: 22px;
+        bottom: 0;
+    }
+}
+
+@media only screen and (max-width: 767px){
+    .plant-index li, .mode-choice li{
+        display: inline-block;
+    }
+    .mode-choice, .plant-index{
+        margin-left: 8px;
+    }
+    .plant-name, .mode-name {
+        width: 150px;
+        height: 90px;
+        margin-bottom: 12px;
+    }
+    .mode-name h3,
+    .plant-name h3{
+        font-size: 18px;
+    }
+    .mode-choice,
+    .plant-index ul{
+        display: flex;
+        justify-content: center;
+    }
+    .plant-index li,
+    .mode-choice .btn-mode{
+        width: 120px;
+        height: 90px;
+        margin-right: 10px;
+        font-size: 20px;
+    }
+    .plant-index p, .mode-choice p {
+        font-size: 16px;
+        padding: 4px 0;
+    }
+    .plant-index .number {
+        font-size: 22px;
+        bottom: 0;
+    }
+    .detail-hand .slidecontainer .water-slider{
+        width: 450px;
+    }
 }
