@@ -14,8 +14,8 @@ import random
 
 ADAFRUIT_IO_USERNAME = ""
 ADAFRUIT_IO_KEY = ""
-ADAFRUIT_IO_USERNAME = "nguyenngoc"
-ADAFRUIT_IO_KEY = "aio_pxwm06skCqgXBTCHqSB7PwAVf9lP"
+# ADAFRUIT_IO_USERNAME = "nguyenngoc"
+# ADAFRUIT_IO_KEY = "aio_pxwm06skCqgXBTCHqSB7PwAVf9lP"
 aio=Client(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
 app = Flask(__name__)
 app.secret_key = 'hcmutk18'

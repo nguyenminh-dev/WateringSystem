@@ -3,8 +3,8 @@ import paho.mqtt.client as mqtt
 
 ADAFRUIT_IO_USERNAME = ""
 ADAFRUIT_IO_KEY = ""
-ADAFRUIT_IO_USERNAME = "nguyenngoc"
-ADAFRUIT_IO_KEY = "aio_pxwm06skCqgXBTCHqSB7PwAVf9lP"
+# ADAFRUIT_IO_USERNAME = "nguyenngoc"
+# ADAFRUIT_IO_KEY = "aio_pxwm06skCqgXBTCHqSB7PwAVf9lP"
 client = mqtt.Client()
 client.username_pw_set(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
 ADAFRUIT_HOST = 'io.adafruit.com'
