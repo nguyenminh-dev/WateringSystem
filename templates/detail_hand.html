@@ -285,11 +285,13 @@
     }, 2000);
 
 
-    client = new Paho.MQTT.Client("io.adafruit.com", 443, "nguyenngoc");
+    client = new Paho.MQTT.Client("io.adafruit.com", 443, "CSE_BBC1");
     client.onConnectionLost = onConnectionLost;
     var options = {
         // userName: "nguyenngoc",
         // password: "aio_pxwm06skCqgXBTCHqSB7PwAVf9lP",
+        // userName: "CSE_BBC1",
+        // password: "aio_GOii70J59sAf8pkCYFQzT9q6SIXk",
         userName: "",
         password: "",
         onSuccess:onConnect,
@@ -310,14 +312,14 @@
     function controllerPump() {
         let yes = document.getElementById("customSwitch8");
         if (yes.checked == true) {        
-            publish_msg = {id: "11", name: "RELAY", data: "1", unit: ""};
+            publish_msg = {"id":"11","name":"RELAY","data":"1","unit":""};
             message = new Paho.MQTT.Message(JSON.stringify(publish_msg));
-            message.destinationName = "nguyenngoc/feeds/bk-iot-relay";
+            message.destinationName = "CSE_BBC1/feeds/bk-iot-relay";
             client.send(message);
         } else {     
-            publish_msg = {id: "11", name: "RELAY", data: "0", unit: ""};
+            publish_msg = {"id":"11","name":"RELAY","data":"0","unit":""};
             message = new Paho.MQTT.Message(JSON.stringify(publish_msg));
-            message.destinationName = "nguyenngoc/feeds/bk-iot-relay";
+            message.destinationName = "CSE_BBC1/feeds/bk-iot-relay";
             client.send(message);
         }
     }

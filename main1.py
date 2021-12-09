@@ -6,16 +6,18 @@ import json, datetime, time, threading, pytz
 import flask_login
 import database
 import connectBBC1
+import getDataRelay
 from Adafruit_IO import Client
 from flask_wtf import FlaskForm
 from wtforms import SubmitField
 from flask_bootstrap import Bootstrap
 import random
+from datetime import date
 
 ADAFRUIT_IO_USERNAME = ""
 ADAFRUIT_IO_KEY = ""
-# ADAFRUIT_IO_USERNAME = "nguyenngoc"
-# ADAFRUIT_IO_KEY = "aio_pxwm06skCqgXBTCHqSB7PwAVf9lP"
+# ADAFRUIT_IO_USERNAME = "CSE_BBC"
+# ADAFRUIT_IO_KEY = "aio_eIzx84QrfGct3jkJM5aW02aKAIbB"
 aio=Client(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
 app = Flask(__name__)
 app.secret_key = 'hcmutk18'
@@ -134,9 +136,8 @@ def manager():
 @app.route('/manager/create', methods=['POST'])
 @flask_login.login_required
 def createMode():
-    hcm_time_zone = pytz.timezone("Asia/Ho_Chi_Minh")
-    timestamp_th = datetime.datetime.now()
-    timestamp_th = timestamp_th.astimezone(hcm_time_zone)
+    now = datetime.datetime.now()
+    timestamp_th = now.strftime("%Y-%m-%d %H:%M:%S+07:00")
     if request.method == 'POST':
         mode = request.form['mode']
         soil = request.form['soil']
@@ -239,42 +240,46 @@ def autoWateringMode(temp, humid, soil):
     humid1 = database.getLastAir()[1]
     soil1 = database.getLastSoil()[0]
     pump = database.getLastPump()[0]
-    hcm_time_zone = pytz.timezone("Asia/Ho_Chi_Minh")
-    temp_humid_server = aio.receive('bk-iot-temp-humid')
-    timestamp_th = datetime.datetime.strptime(temp_humid_server[1], '%Y-%m-%dT%H:%M:%S%z')
-    timestamp_th = timestamp_th.astimezone(hcm_time_zone)
+    now = datetime.datetime.now()
+    timestamp_th = now.strftime("%Y-%m-%d %H:%M:%S+07:00")
     if soil1 < soil:
         if temp1 < temp and humid1 > humid and pump == 'OFF':
-            data = {"id":"11", "name":"RELAY", "data":"1", "unit":""}
+            data = {"id":"11","name":"RELAY","data":"1","unit":""}
+            database.insertPump('ON', timestamp_th)
+            connectBBC1.PublishData(data)
+    elif soil1 < 50 and pump =='OFF':
+            data = {"id":"11","name":"RELAY","data":"1","unit":""}
             database.insertPump('ON', timestamp_th)
             connectBBC1.PublishData(data)
     elif soil1 > 450:
         if pump == 'ON':
-            data = {"id":"11", "name":"RELAY", "data":"0", "unit":""}
+            data = {"id":"11","name":"RELAY","data":"0","unit":""}
             database.insertPump('OFF', timestamp_th)
             connectBBC1.PublishData(data)
     else:
-        data = {"id":"11", "name":"RELAY", "data":"0", "unit":""}
+        data = {"id":"11","name":"RELAY","data":"0","unit":""}
         database.insertPump('OFF', timestamp_th)
         connectBBC1.PublishData(data)
 
 def autoWatering():
-    threading.Timer(2.0, autoWatering).start()
+    threading.Timer(5.0, autoWatering).start()
     temp1 = database.getLastAir()[0]
     humid1 = database.getLastAir()[1]
     soil1 = database.getLastSoil()[0]
     pump = database.getLastPump()[0]
-    if soil1 < 100:
-        if temp1 < 27 and humid1 > 100 and pump == 'OFF':
-            data = {"id":"11", "name":"RELAY", "data":"1", "unit":""}
-            connectBBC1.PublishData(data)
-    if soil1 > 450:
-        if temp1 < 27 and humid1 > 100 and pump == 'ON':
-            data = {"id":"11", "name":"RELAY", "data":"0", "unit":""}           
-            connectBBC1.PublishData(data)
+    now = datetime.datetime.now()
+    timestamp_th = now.strftime("%Y-%m-%d %H:%M:%S+07:00")
+    if soil1 < 10 and pump =='OFF':
+        data = {"id":"11","name":"RELAY","data":"1","unit":""}
+        database.insertPump('ON', timestamp_th)
+        connectBBC1.PublishData(data)
+    elif soil1 > 300 and pump =='ON':
+        data = {"id":"11","name":"RELAY","data":"0","unit":""}
+        database.insertPump('OFF', timestamp_th)
+        connectBBC1.PublishData(data)
 
 def getDataFromServer():
-    threading.Timer(3.0, getDataFromServer).start()
+    threading.Timer(5.0, getDataFromServer).start()
     hcm_time_zone = pytz.timezone("Asia/Ho_Chi_Minh")
     temp_humid_server = aio.receive('bk-iot-temp-humid')
     timestamp_th = datetime.datetime.strptime(temp_humid_server[1], '%Y-%m-%dT%H:%M:%S%z')
@@ -300,20 +305,7 @@ def getDataFromServer():
         database.insertSoil(soil, timestamp_s)
     else:
         pass
-    
-    relay_server = aio.receive('bk-iot-relay')
-    timestamp_p = datetime.datetime.strptime(relay_server[1], '%Y-%m-%dT%H:%M:%S%z')
-    timestamp_p = timestamp_p.astimezone(hcm_time_zone)
-    if str(timestamp_p) != database.getLastPump()[1]:
-        data = relay_server[3]
-        data = data.replace("'", '"')
-        data = json.loads(data)
-        relay = data['data']
-        if relay == '1':
-            database.insertPump('ON', timestamp_p)
-        else:
-            database.insertPump('OFF', timestamp_p)
-    else: pass
+    getDataRelay.getDataRelay()
 
 
 getDataFromServer()

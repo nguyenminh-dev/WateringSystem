@@ -201,7 +201,7 @@
             }  
             else 
             {  
-                $.ajax({  
+                var a = $.ajax({  
                     url:"/manager/create",  
                     method:"POST",  
                     data: {mode:mode, soil:soil, temp:temp, humid:humid, spraymode:spraymode, amountwater:amountwater},    
@@ -210,13 +210,10 @@
             }   
         });    
     });
-
-
-
         const modalAdd = document.querySelector('.js-modal')
         const modalAddContainer = document.querySelector('.js-modal-container')
         function showModal(){
-           modalAdd.classList.add('open')
+            modalAdd.classList.add('open')
         }
         function closeModal(){
             modalAdd.classList.remove('open')
