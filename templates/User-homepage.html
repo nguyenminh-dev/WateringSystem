@@ -12,12 +12,13 @@
 </head>
 <body>
     <div id="container" class="grid">
+
         <div id="nav-bar" class="row no-gutter">
             <div class="col l-3 m-6 c-6">
                 <a href="{{ url_for('index') }}"><img src="../static/img/logo.png" alt="logo" width="90px" height="75px"></a>
             </div>
             <div class="col l-6 m-0 c-0">
-                <ul>
+                <ul id="navigation">
                     <li><a class="btn-selected" href="{{ url_for('index') }}">Trang chủ</a></li>
                     <li><a href="{{ url_for('area') }}">Khu vực</a></li>
                     <li><a href="{{ url_for('manager') }}">Quản lý chế độ tưới</a></li>
